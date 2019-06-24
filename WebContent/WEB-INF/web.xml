@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>CRMS</display-name>
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+    <welcome-file>/pages/admin.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <error-page>
+	<error-code>404</error-code>
+	<location>/pages/404.html</location>
+	</error-page>
+  
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+  
+  
+    <!-- 通过CORS技术实现AJAX跨域访问 -->
+   <filter>
+       <filter-name>corsFilter</filter-name>
+       <filter-class>com.iTeam.filter.CorsFilter</filter-class>
+       <init-param>
+           <param-name>allowOrigin</param-name>
+           <param-value>*</param-value>
+       </init-param>
+       <init-param>
+           <param-name>allowMethods</param-name>
+           <param-value>GET,POST,PUT,DELETE,OPTIONS</param-value>
+       </init-param>
+       <init-param>
+           <param-name>allowCredentials</param-name>
+           <param-value>true</param-value>
+       </init-param>
+       <init-param>
+           <param-name>allowHeaders</param-name>
+           <param-value>Content-Type,X-Token</param-value>
+       </init-param>
+   </filter>
+   <filter-mapping>
+       <filter-name>corsFilter</filter-name>
+       <url-pattern>/*</url-pattern>
+   </filter-mapping>
+  
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+
+	<!-- 字符编码过滤器 -->
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <async-supported>true</async-supported>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!--开启put，和delete的支持-->
+<!--使用Rest风格的URI,将页面普通的post请求转为delete或者put请求-->
+  <filter>
+	<filter-name>hiddenHttpMethodFilter</filter-name>
+	<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+  </filter>
+  <filter-mapping>
+	<filter-name>hiddenHttpMethodFilter</filter-name>
+	<url-pattern>/</url-pattern>
+  </filter-mapping>
+
+
+
+
+
+  <filter>
+  	<display-name>LoginFilter</display-name>
+  	<filter-name>LoginFilter</filter-name>
+  	<filter-class>com.iTeam.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>LoginFilter</filter-name>
+  	<url-pattern>/pages/*</url-pattern>
+  </filter-mapping>
+  
+    <servlet>
+    <servlet-name>springMVC</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+    <!-- 支持异步处理 -->
+    <async-supported>true</async-supported>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springMVC</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+</web-app>

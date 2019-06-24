@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iTeam.dao.ClientDao">
+
+	<!-- 封装Client类的Map -->
+	<resultMap type="Client" id="ClientResult">
+		<result property="clientNo" column="clientNo"/>
+		<result property="client" column="client"/>
+		<result property="cAddress" column="cAddress"/>
+		<result property="cEmail" column="cEmail"/>
+		<result property="cPhone" column="cPhone"/>
+	</resultMap>
+	
+	<!-- 实现getClientList方法 -->
+	<select id="getClientList" resultType="Client" parameterType="Map">
+		select * from client
+		<where>
+			<if test="client != null and client != ''">
+				and client like #{client}
+			</if>
+		</where>
+		<if test="start != null and size != null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	
+	<!-- 实现getTotal方法 -->
+	<select id="getTotal" resultType="Long">
+		select COUNT(*) from client
+		<where>
+			<if test="client != null and client != ''">
+				and client like #{client}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 实现add方法 -->
+	<insert id="add" parameterType="Client">
+		insert into client values(null,#{client},#{cAddress},#{cEmail},#{cPhone})
+	</insert>
+	
+	<!-- 实现update方法 -->
+	<update id="update" parameterType="Client">
+		update client
+		<set>
+			<if test="client != null and client != ''">
+				client = #{client},
+			</if>
+			<if test="cAddress != null and cAddress != ''">
+				cAddress = #{cAddress},
+			</if>
+			<if test="cEmail != null and cEmail != ''">
+				cEmail = #{cEmail},
+			</if>
+			<if test="cPhone != null and cPhone != ''">
+				cPhone = #{cPhone},
+			</if>
+		</set>
+		where clientNo = #{clientNo}
+	</update>
+	
+	<!-- 实现delete方法 -->
+	<delete id="delete" parameterType="Integer">
+		delete from client where clientNo = #{clientNo}
+	</delete>
+</mapper>

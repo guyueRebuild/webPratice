@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iTeam.dao.PurchasingDao">
+
+	<!-- 封装Purchasing类的Map -->
+	<resultMap type="Purchasing" id="PurchasingResult">
+		<result property="pNo" column="pNo"/>
+		<result property="goodsNo" column="goodsNo"/>
+		<result property="quantityIn" column="quantityIn"/>
+		<result property="priceIn" column="priceIn"/>
+		<result property="dateIn" column="dateIn"/>
+		<result property="handler" column="handler"/>
+		<result property="pRemark" column="pRemark"/>
+	</resultMap>
+	
+	<!-- 实现getPurchasingList方法 -->
+	<select id="getPurchasingList" resultType="Purchasing" parameterType="Map">
+		select g.goodsName,s.storageName,p.* from purchasing p join goods g on g.goodsNo = p.goodsNo inner join storage s on s.storageNo = p.storageNo
+		<where>
+			<if test="goodsName != null and goodsName != ''">
+				and goodsName like #{goodsName}
+			</if>
+		</where>
+		<if test="start != null and size != null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	
+	<!-- 实现getTotal方法 -->
+	<select id="getTotal" resultType="Long">
+		select COUNT(*) from purchasing
+		<where>
+			<if test="goodsNo != null and goodsNo != ''">
+				and goodsNo like #{goodsNo}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 实现add方法 -->
+	<insert id="add" parameterType="Purchasing">
+		insert into purchasing values(null,#{goodsNo},#{quantityIn},#{priceIn},#{dateIn},#{handler},#{pRemark},#{storageNo})
+	</insert>
+	
+	<!-- 实现update方法 -->
+	<update id="update" parameterType="Purchasing">
+		update purchasing
+		<set>
+			<if test="goodsNo != null and goodsNo != ''">
+				goodsNo = #{goodsNo},
+			</if>
+			<if test="quantityIn != null and quantityIn != ''">
+				quantityIn = #{quantityIn},
+			</if>
+			<if test="priceIn != null and priceIn != ''">
+				priceIn = #{priceIn},
+			</if>
+			<if test="dateIn != null">
+				dateIn = #{dateIn},
+			</if>
+			<if test="handler != null and handler != ''">
+				handler = #{handler},
+			</if>
+			<if test="pRemark != null and pRemark != ''">
+				pRemark = #{pRemark},
+			</if>
+			<if test="storageNo != null and storageNo != ''">
+				storageNo = #{storageNo},
+			</if>			
+		</set>
+		where pNo = #{pNo}
+	</update>
+	
+	<!-- 实现delete方法 -->
+	<delete id="delete" parameterType="Integer">
+		delete from purchasing where pNO = #{pNo}
+	</delete>
+</mapper>

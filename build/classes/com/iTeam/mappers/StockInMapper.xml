@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iTeam.dao.StockInDao">
+
+	<resultMap type="StockIn" id="StockInResult">
+		<result property="stockInNo" column="stockInNo" />
+		<result property="storageNo" column="storageNo" />
+		<result property="goodsNo" column="goodsNo" />
+		<result property="siQuantity" column="siQuantity" />
+		<result property="siDate" column="siDate" />
+		<result property="handler" column="handler" />
+		<result property="siRemark" column="siRemark" />
+	</resultMap>
+
+	<select id="findAll" resultType="StockIn" parameterType="Map">
+		select * from stock_in
+		<where>
+			<if test="handler != null and handler != ''">
+				handler like #{handler}
+			</if>
+		</where>
+		<if test="start != null and size != null">
+			limit #{start},#{size}
+		</if>
+	</select>
+
+	<select id="getTotal" resultType="Integer">
+		select COUNT(*) from stock_in
+	</select>
+
+	<insert id="addStockIn" parameterType="StockIn">
+		insert into stock_in
+		(storageNo,goodsNo,siQuantity,siDate,handler,siRemark)
+		values(#{storageNo},#{goodsNo},#{siQuantity},#{siDate},#{handler},#{siRemark})
+	</insert>
+
+	<update id="updateStockIn" parameterType="StockIn">
+		update stock_in set
+		storageNo=#{storageNo},goodsNo=#{goodsNo},
+		siQuantity=#{siQuantity},siDate=#{siDate},
+		handler=#{handler},siRemark=#{siRemark}
+		where stockInNo=#{stockInNo}
+	</update>
+
+	<delete id="deleteByStockInNo" parameterType="Integer">
+		delete from stock_in where stockInNo=#{stockInNo}
+	</delete>
+	
+	<select id="getStorageByStockInNo" resultType="Integer" parameterType="Integer">
+		select storageNo from stock_in where stockInNo=#{stockInNo}
+	</select>
+
+</mapper>

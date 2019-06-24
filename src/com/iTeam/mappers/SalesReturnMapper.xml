@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置一个mybatis映射文件，它会实现数据访问接口 -->
+<!-- namespace配置的就是要实现的接口 -->
+<mapper namespace="com.iTeam.dao.SalesReturnDao">
+
+  <!-- 根据接口的定义的方法进行配置 -->
+  <!-- id配置方法的名称，resultType配置返回的数据类型 -->
+  <!-- 标签内部配置对应的sql语句 -->
+  <select id="findAll" resultType="SalesReturn">
+		select s.*,g.`goodsName`,c.`client`,st.storageName  from sales_return s join goods g on s.`goodsNo`=g.`goodsNo` inner join `client` c on s.`clientNo` = c.`clientNo` inner join storage st on st.storageNo = s.storageNo
+		<where>
+			<if test="handler != null and handler != ''">
+				and s.handler like #{handler}
+			</if>
+		</where>
+		<if test="start != null and size != null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	
+  
+  <select id="getTotal" resultType="Long">
+		select COUNT(*) from sales_return
+		<where>
+			<if test="handler != null and handler != ''">
+				and handler like #{handler}
+			</if>
+		</where>
+	</select>
+	
+	<!-- <select id="findSalesBysrNo" resultType="SalesReturn" parameterType="int">
+      select sNo,s.goodsNo,handler,priceSale,quantitySale,sRemark,clientNo,dateSale,g.goodsName "goods.goodsName",g.goodsNo "goods.goodsNo" from sales s join goods g on s.goodsNo=g.goodsNo where sNo=#{sNo}
+  </select> -->
+  
+  <insert id="add" parameterType="SalesReturn">
+      insert into sales_return(sNo,goodsNo,handler,srPrice,srQuantity,srRemark,clientNo,srDate,storageNo) values(#{sNo},#{goodsNo},#{handler},#{srPrice},#{srQuantity},#{srRemark},#{clientNo},#{srDate},#{storageNo})
+  </insert>
+  
+  <update id="update" parameterType="SalesReturn">
+      update sales_return set goodsNo=#{goodsNo},handler=#{handler},srPrice=#{srPrice},srQuantity=#{srQuantity},srRemark=#{srRemark},clientNo=#{clientNo},srDate=#{srDate},storageNo=#{storageNo}
+      where sNo=#{sNo}
+  </update>	
+  
+  <delete id="deleteBysNo" parameterType="Integer">
+      delete from sales_return where sNo=#{sNo}
+  </delete>
+</mapper>

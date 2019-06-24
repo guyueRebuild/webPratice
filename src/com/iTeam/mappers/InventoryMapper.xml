@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iTeam.dao.InventoryDao">
+
+	<resultMap type="Inventory" id="InventoryResult">
+		<result property="storageNo" column="storageNo" />
+		<result property="goodsName" column="goodsName" />
+		<result property="quantity" column="quantity" />
+	</resultMap>
+	
+	<!--查询每种商品在指定编号的仓库的进货数量  -->
+	<select id="getStockInInventory" resultType="Inventory" parameterType="int">
+		select storageNo,goodsName,sum(siQuantity) quantity from stock_in join goods on 
+		stock_in.`goodsNo`=goods.`goodsNo`
+ 		where storageNo = #{storageNo} group by stock_in.goodsNo 
+	</select>
+	
+	<!--查询每种商品在指定编号的仓库的出货数量  -->
+	<select id="getStockOutInventory" resultType="Inventory" parameterType="int">
+		select storageNo,goodsName,sum(soQuantity) quantity from stock_out join goods on 
+		stock_out.`goodsNo`=goods.`goodsNo`
+ 		where storageNo = #{storageNo} group by stock_out.goodsNo 
+	</select>
+	
+	<!-- 查询某个仓库的进货量总量 -->
+	<select id="getStorageInInventory" resultType="int" parameterType="int">
+		select IFNULL(sum(siQuantity),0)  from stock_in where storageNo=#{storageNo}
+	</select>
+	
+	<!-- 查询某个仓库的出库总量 -->
+	<select id="getStorageOutInventory" resultType="int" parameterType="int">
+		select IFNULL(sum(soQuantity),0)  from stock_out where storageNo=#{storageNo}
+	</select>
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置一个mybatis映射文件，它会实现数据访问接口 -->
+<!-- namespace配置的就是要实现的接口 -->
+<mapper namespace="com.iTeam.dao.StockOutDao">
+
+	<select id="findAll" resultType="StockOut">
+		select * from stock_out
+		<where>
+			<if test="handler != null and handler != ''">
+				handler like #{handler}
+			</if>
+		</where>
+		<if test="start != null and size != null">
+			limit #{start},#{size}
+		</if>
+	</select>
+
+	<select id="getTotal" resultType="int">
+		select COUNT(*) from stock_out
+	</select>
+
+	<insert id="addStockOut" parameterType="StockOut">
+		insert into stock_out
+		(storageNo,goodsNo,soQuantity,soDate,handler,soRemark)
+		values(#{storageNo},#{goodsNo},#{soQuantity},#{soDate},#{handler},#{soRemark})
+	</insert>
+
+	<update id="updateStockOut" parameterType="StockOut">
+		update stock_out set
+		storageNo=#{storageNo},goodsNo=#{goodsNo},
+		soQuantity=#{soQuantity},soDate=#{soDate},
+		handler=#{handler},soRemark=#{soRemark}
+		where stockOutNo=#{stockOutNo}
+	</update>
+
+	<delete id="deleteByStockOutNo" parameterType="int">
+		delete from
+		stock_out where StockOutNo=#{StockOutNo}
+	</delete>
+	
+	<select id="getStorageByStockInNo" resultType="int" parameterType="int">
+		select storageNo from stock_out where stockOutNo=#{stockOutNo}
+	</select>
+
+</mapper>

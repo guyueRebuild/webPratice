@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iTeam.dao.ProviderDao">
+	
+	<!-- 封装Provider类的Map -->
+	<resultMap type="Provider" id="ProviderResult">
+		<result property="providerNo" column="providerNo"/>
+		<result property="provider" column="provider"/>
+		<result property="pAddress" column="pAddress"/>
+		<result property="pLinkman" column="pLinkman"/>
+		<result property="pEmail" column="pEmail"/>
+		<result property="pPhone" column="pPhone"/>
+	</resultMap>
+	
+	<!-- 实现getClientList方法 -->
+	<select id="getProviderList" resultType="Provider" parameterType="Map">
+		select * from provider
+		<where>
+			<if test="provider != null and provider != ''">
+				and provider like #{provider}
+			</if>
+		</where>
+		<if test="start != null and size != null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	
+	<!-- 实现getTotal方法 -->
+	<select id="getTotal" resultType="Long">
+		select COUNT(*) from provider
+		<where>
+			<if test="provider != null and provider != ''">
+				and provider like #{provider}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 实现add方法 -->	
+	<insert id="add" parameterType="Provider">
+		insert into provider values(null,#{provider},#{pAddress},#{pLinkman},#{pEmail},#{pPhone})
+	</insert>
+	
+	<!-- 实现update方法 -->	
+	<update id="update" parameterType="Provider">
+		update provider
+		<set>
+			<if test="provider != null and provider != ''">
+				provider = #{provider},
+			</if>
+			<if test="pAddress != null and pAddress != ''">
+				pAddress = #{pAddress},
+			</if>
+			<if test="pLinkman != null and pLinkman != ''">
+				pLinkman = #{pLinkman},
+			</if>
+			<if test="pEmail != null and pEmail != ''">
+				pEmail = #{pEmail},
+			</if>
+			<if test="pPhone != null and pPhone != ''">
+				pPhone = #{pPhone},
+			</if>
+		</set>
+		where providerNo = #{providerNo}
+	</update>
+	
+	<!-- 实现delete方法 -->	
+	<delete id="delete" parameterType="Integer">
+		delete from provider where providerNo = #{providerNo}
+	</delete>
+
+</mapper>
