@@ -12,22 +12,19 @@ import javax.annotation.Resource;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iTeam.model.GoodsType;
 import com.iTeam.model.PageBean;
 import com.iTeam.response.MyResponse;
 import com.iTeam.service.GoodsTypeService;
-import com.iTeam.util.DataJsonValueProcessor;
-import com.iTeam.util.StringUtil;
+import com.iTeam.util.PageUtil;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
 /**
  * 商品类别控制层
@@ -59,23 +56,19 @@ public class GoodsTypeController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/goodsTypes/{goodsType}/{page}/{rows}",method = RequestMethod.GET)
-	public MyResponse list(@PathVariable("page") String page,@PathVariable("rows")String rows,@PathVariable("goodsType") String goodsType) throws IOException {
-		PageBean pageBean = new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
-		Map<String,Object> map = new HashMap<String,Object>();
-		JsonConfig jsonConfig = new JsonConfig();
-		JSONObject resultJsonObj = new JSONObject();
-		
-		map.put("type", StringUtil.formatString(goodsType));
-		map.put("start", pageBean.getStart());
-		map.put("size", pageBean.getPageSize());
-		List<GoodsType> list = service.list(map);
+	@RequestMapping(value = "/goodsTypes",method = RequestMethod.GET)
+	public MyResponse list(@RequestParam(value = "page",required = false) String page,
+			@RequestParam(value = "rows",required = false)String rows,
+			@RequestParam(value = "type",required = false)String goodsType) throws IOException {
+		PageBean pageBean = PageUtil.getDefaultPage(rows, page);
+		Map<String,Object> map = PageUtil.getMapFromPage(pageBean, "goodsType", goodsType);
+		Map<String,Object> resultData=new HashMap<String, Object>();
+		List<GoodsType> goodsTypelist = service.list(map);
 		Long total = service.getTotal(map);
-		jsonConfig.registerJsonValueProcessor(java.util.Date.class, new DataJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
-		JSONArray jsonArray = JSONArray.fromObject(list,jsonConfig);
-		resultJsonObj.put("rows", jsonArray);
-		resultJsonObj.put("total", total);
-		return new MyResponse().success(resultJsonObj);
+		JSONArray jsonArray = PageUtil.ProcessDataJsonValue(java.util.Date.class, goodsTypelist, "yyyy-MM-dd HH:mm:ss");
+		resultData.put("list", jsonArray);
+		resultData.put("total", total);
+		return new MyResponse().success(resultData);
 	}
 	
 	/**
@@ -83,7 +76,7 @@ public class GoodsTypeController {
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/goodsTypes",method = RequestMethod.GET)
+	@RequestMapping(value = "/allGoodsType",method = RequestMethod.GET)
 	public MyResponse typeList() throws IOException {
 		List<GoodsType> typeList = service.list(null);
 		return new MyResponse().success(typeList);

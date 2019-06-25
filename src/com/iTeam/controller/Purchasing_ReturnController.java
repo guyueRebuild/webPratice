@@ -12,22 +12,19 @@ import javax.annotation.Resource;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iTeam.model.PageBean;
 import com.iTeam.model.Purchasing_Return;
 import com.iTeam.response.MyResponse;
 import com.iTeam.service.Purchasing_ReturnService;
-import com.iTeam.util.DataJsonValueProcessor;
-import com.iTeam.util.StringUtil;
+import com.iTeam.util.PageUtil;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
 /**
  * 控制器类
@@ -59,24 +56,20 @@ public class Purchasing_ReturnController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/purchasing_Returns/{goodsName}/{page}/{rows}",method = RequestMethod.GET)
-	public MyResponse purchasing_ReturnList(@PathVariable("page") String page,@PathVariable("rows")String rows,@PathVariable("goodsName")String goodsName) throws IOException {
-		PageBean pageBean = new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
-		Map<String,Object> map = new HashMap<String,Object>();
-		JsonConfig jsonConfig = new JsonConfig();
-		JSONObject resultJsonObj = new JSONObject();
+	@RequestMapping(value = "/purchasing_Returns",method = RequestMethod.GET)
+	public MyResponse purchasing_ReturnList(@RequestParam(value = "page",required = false) String page,
+			@RequestParam(value = "rows",required = false)String rows,
+			@RequestParam(value = "goodsName",required = false)String goodsName) throws IOException {
+		PageBean pageBean = PageUtil.getDefaultPage(rows, page);
+		Map<String,Object> map = PageUtil.getMapFromPage(pageBean, "goodsName", goodsName);
+		Map<String,Object> resultData=new HashMap<String, Object>();
 		MyResponse response = new MyResponse();
-		
-		map.put("goodsName",StringUtil.formatString(goodsName));
-		map.put("start", pageBean.getStart());
-		map.put("size", pageBean.getPageSize());
-		List<Purchasing_Return> List = service.getPurchasing_ReturnList(map);
+		List<Purchasing_Return> list = service.getPurchasing_ReturnList(map);
 		Long total = service.getTotal(map);
-		jsonConfig.registerJsonValueProcessor(java.util.Date.class, new DataJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
-		JSONArray jsonArray = JSONArray.fromObject(List, jsonConfig);
-		resultJsonObj.put("rows", jsonArray);
-		resultJsonObj.put("total", total);
-		return response.success(resultJsonObj);
+		JSONArray jsonArray = PageUtil.ProcessDataJsonValue(java.util.Date.class, list, "yyyy-MM-dd HH:mm:ss");
+		resultData.put("list", jsonArray);
+		resultData.put("total", total);
+		return response.success(resultData);
 	}
 	
 	/**

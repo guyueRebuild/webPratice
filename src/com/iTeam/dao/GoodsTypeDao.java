@@ -15,6 +15,8 @@ public interface GoodsTypeDao {
 	//获取商品类别信息列表
 	public List<GoodsType> list(Map<String,Object> map);
 	
+	
+	
 	//获取记录总数
 	public Long getTotal(Map<String,Object> map);
 	

@@ -17,10 +17,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iTeam.annotion.IgnoreSecurity;
@@ -30,13 +30,10 @@ import com.iTeam.model.UserMessage;
 import com.iTeam.response.MyResponse;
 import com.iTeam.service.UserMessageService;
 import com.iTeam.token.TokenManager;
-import com.iTeam.util.StringUtil;
-import com.iTeam.util.DataJsonValueProcessor;
 import com.iTeam.util.MyConstants;
+import com.iTeam.util.PageUtil;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
 /**
  * 用户信息控制层
@@ -99,24 +96,20 @@ public class UserMessageController {
 	 * @throws IOException
 	 * @return 返回用户列表
 	 */
-	@RequestMapping(value="/users/{userName}/{page}/{rows}",method=RequestMethod.GET)
-	public MyResponse userList(@PathVariable("page") String page,
-			@PathVariable("rows") String rows, @PathVariable("userName") String userName) throws IOException {
-		PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
-		Map<String, Object> map = new HashMap<String, Object>();
-		JsonConfig jsonConfig = new JsonConfig();
-		JSONObject resultJSONObj = new JSONObject();
-		map.put("userName", StringUtil.formatString(userName));
-		map.put("start", pageBean.getStart());
-		map.put("size", pageBean.getPageSize());
+	@RequestMapping(value="/users",method=RequestMethod.GET)
+	public MyResponse userList(@RequestParam(value = "page",required = false) String page,
+			@RequestParam(value = "rows",required = false)String rows,
+			@RequestParam(value = "userName",required = false) String userName) throws IOException {
+		PageBean pageBean = PageUtil.getDefaultPage(rows, page);
+		Map<String, Object> map = PageUtil.getMapFromPage(pageBean, "userName", userName);
+		MyResponse response = new MyResponse();
+		Map<String,Object> resultData=new HashMap<String, Object>();	
 		List<UserMessage> userList = userMessageService.getUserList(map);
 		Long userTotal = userMessageService.getTotal(map);
-		jsonConfig.registerJsonValueProcessor(java.util.Date.class, new DataJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
-		JSONArray jsonArray = JSONArray.fromObject(userList, jsonConfig);
-		resultJSONObj.put("rows", jsonArray);
-		resultJSONObj.put("total", userTotal);
-		MyResponse response = new MyResponse();
-		return response.success(resultJSONObj);
+		JSONArray jsonArray = PageUtil.ProcessDataJsonValue(java.util.Date.class, userList, "yyyy-MM-dd HH:mm:ss");
+		resultData.put("list", jsonArray);
+		resultData.put("total", userTotal);
+		return response.success(resultData);
 	}
 	/**
 	 * 添加用户

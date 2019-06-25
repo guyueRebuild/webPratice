@@ -7,20 +7,18 @@ import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iTeam.model.Inventory;
-import com.iTeam.model.PageBean;
 import com.iTeam.response.MyResponse;
 import com.iTeam.service.InventoryService;
-import com.iTeam.util.DataJsonValueProcessor;
+import com.iTeam.util.PageUtil;
+import com.iTeam.util.StringUtil;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
 @RestController
 @RequestMapping("/")
@@ -37,19 +35,14 @@ public class inventorySearchController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/inventorySearch/{inventoryStorageNo}/{page}/{rows}",method = RequestMethod.GET)
-	public MyResponse list(@PathVariable("page") String page,
-			@PathVariable("rows") String rows,@PathVariable("inventoryStorageNo")String inventoryStorageNo)
+	@RequestMapping(value = "/inventorySearch",method = RequestMethod.GET)
+	public MyResponse list(@RequestParam(value = "page",required = false) String page,
+			@RequestParam(value = "rows",required = false)String rows,
+			@RequestParam(value = "inventoryStorageNo",required = true)String inventoryStorageNo)
 			throws IOException {
-		PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
-		Map<String, Object> map = new HashMap<String, Object>();
-		JsonConfig jsonConfig = new JsonConfig();
-		JSONObject resultJsonObj = new JSONObject();
-		int storageNo = Integer.parseInt(inventoryStorageNo);
 		
-		map.put("stroageNo", storageNo);;
-		map.put("start", pageBean.getStart());
-		map.put("size", pageBean.getPageSize());
+		int storageNo = StringUtil.isEmpty(inventoryStorageNo)?null:Integer.parseInt(inventoryStorageNo);
+		Map<String,Object> resultData=new HashMap<String, Object>();
 		//查询每种商品在指定编号的仓库的进货数量
 		List<Inventory> in = service.getStockInInventory(storageNo);
 		//查询每种商品在指定编号的仓库的出货数量
@@ -63,13 +56,11 @@ public class inventorySearchController {
 			}
 		}
 		int total = in.size()>out.size()?in.size():out.size();
-		jsonConfig.registerJsonValueProcessor(java.util.Date.class, new DataJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));
-		//JSONArray jsonArray = JSONArray.fromObject(in, jsonConfig);
-		JSONArray jsonArray = JSONArray.fromObject(in.subList((Integer.parseInt(page)-1)*Integer.parseInt(rows), 
-				total>(Integer.parseInt(page))*Integer.parseInt(rows)?Integer.parseInt(rows):Integer.parseInt(rows)*(Integer.parseInt(page)-1)+total-(Integer.parseInt(page)-1)*Integer.parseInt(rows)), 
-				jsonConfig);
-		resultJsonObj.put("rows", jsonArray);
-		resultJsonObj.put("total", total);
-		return new MyResponse().success(resultJsonObj);
+		JSONArray jsonArray = PageUtil.ProcessDataJsonValue(java.util.Date.class, in.subList((Integer.parseInt(page)-1)*Integer.parseInt(rows), 
+				total>(Integer.parseInt(page))*Integer.parseInt(rows)?Integer.parseInt(rows):Integer.parseInt(rows)*(Integer.parseInt(page)-1)+total-(Integer.parseInt(page)-1)*Integer.parseInt(rows)),
+						"yyyy-MM-dd HH:mm:ss");
+		resultData.put("list", jsonArray);
+		resultData.put("total", total);
+		return new MyResponse().success(resultData);
 	}
 }
