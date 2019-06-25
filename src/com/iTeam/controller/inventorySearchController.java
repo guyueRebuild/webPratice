@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iTeam.model.Inventory;
+import com.iTeam.model.PageBean;
 import com.iTeam.response.MyResponse;
 import com.iTeam.service.InventoryService;
 import com.iTeam.util.PageUtil;
@@ -40,7 +41,7 @@ public class inventorySearchController {
 			@RequestParam(value = "rows",required = false)String rows,
 			@RequestParam(value = "inventoryStorageNo",required = true)String inventoryStorageNo)
 			throws IOException {
-		
+		System.out.println(inventoryStorageNo);
 		int storageNo = StringUtil.isEmpty(inventoryStorageNo)?null:Integer.parseInt(inventoryStorageNo);
 		Map<String,Object> resultData=new HashMap<String, Object>();
 		//查询每种商品在指定编号的仓库的进货数量
@@ -56,9 +57,12 @@ public class inventorySearchController {
 			}
 		}
 		int total = in.size()>out.size()?in.size():out.size();
-		JSONArray jsonArray = PageUtil.ProcessDataJsonValue(java.util.Date.class, in.subList((Integer.parseInt(page)-1)*Integer.parseInt(rows), 
-				total>(Integer.parseInt(page))*Integer.parseInt(rows)?Integer.parseInt(rows):Integer.parseInt(rows)*(Integer.parseInt(page)-1)+total-(Integer.parseInt(page)-1)*Integer.parseInt(rows)),
-						"yyyy-MM-dd HH:mm:ss");
+		PageBean pageBean = PageUtil.getDefaultPage(rows, page, total);
+		int start = pageBean.getStart();
+		int pageSize=pageBean.getPageSize();
+		int end = start+pageSize;
+		JSONArray jsonArray = PageUtil.ProcessDataJsonValue(java.util.Date.class, in.subList(start, 
+				total>=end?end:start+(end-total)),"yyyy-MM-dd HH:mm:ss");
 		resultData.put("list", jsonArray);
 		resultData.put("total", total);
 		return new MyResponse().success(resultData);

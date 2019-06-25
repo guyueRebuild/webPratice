@@ -34,6 +34,17 @@ public class PageUtil {
 		return new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 	}
 
+	public static PageBean getDefaultPage(String rows,String page,int defaultRows) {
+		if(StringUtil.isEmpty(rows)) {
+			return new PageBean(1,defaultRows);
+		}
+		if(StringUtil.isEmpty(page)) {
+			return new PageBean(1,Integer.parseInt(rows));
+		}
+		return new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
+	}
+
+	
 	/**
 	 * 根据pageBean里面的信息以及匹配信息返回Map
 	 * @param pageBean
