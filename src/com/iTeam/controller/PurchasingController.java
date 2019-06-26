@@ -77,10 +77,10 @@ public class PurchasingController {
 	 * 添加采购信息
 	 * @param purchasing
 	 * @return
-	 * @throws IOException
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/purchasing",method = RequestMethod.POST,produces = PRODUCES)
-	public MyResponse addPurchasing(@RequestBody Purchasing purchasing) throws IOException {
+	public MyResponse addPurchasing(@RequestBody Purchasing purchasing) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.add(purchasing);
@@ -96,10 +96,10 @@ public class PurchasingController {
 	 * 更新采购信息
 	 * @param purchasing
 	 * @return
-	 * @throws IOException
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/purchasing",method = RequestMethod.PUT,produces = PRODUCES)
-	public MyResponse updatePurchasing(@RequestBody Purchasing purchasing) throws IOException {
+	public MyResponse updatePurchasing(@RequestBody Purchasing purchasing) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.update(purchasing);

@@ -19,6 +19,8 @@
 	<!-- 开启注解驱动 -->
 	<mvc:annotation-driven></mvc:annotation-driven>
 
+	
+
 	<!-- 启用注解扫描，并定义组件查找规则 ，mvc层只负责扫描@Controller、@ControllerAdvice -->
    <!-- base-package 如果多个，用“,”分隔 -->
    <context:component-scan base-package="com.iTeam"
@@ -30,7 +32,8 @@
        <context:include-filter type="annotation"
            expression="org.springframework.web.bind.annotation.ControllerAdvice" />
    </context:component-scan>
-
+	<!-- 支持Controller的AOP代理 -->
+	<aop:aspectj-autoproxy/>
 	<bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>

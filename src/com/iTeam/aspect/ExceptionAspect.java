@@ -68,14 +68,10 @@ public class ExceptionAspect {
        return new MyResponse().failure("content_type_not_supported");
    }
 
-   /**
-    * 500 - Internal Server Error
-    */
-   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
    @ExceptionHandler(TokenException.class)
-   public MyResponse handleTokenException(Exception e) {
+   public MyResponse handleTokenException(TokenException e) {
        log.error("Token is invaild...", e);
-       return new MyResponse().failure("Token is invaild");
+       return new MyResponse().failure(e.getMsg());
    }
 
    /**
@@ -95,7 +91,6 @@ public class ExceptionAspect {
 	 * @return 错误信息
 	 */
 	@ExceptionHandler(UserNotFoundException.class)
-	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public MyResponse userNotFound(UserNotFoundException e){
 		log.error("user Not found...");
 		String username=e.getuserName();

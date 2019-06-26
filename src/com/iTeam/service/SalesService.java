@@ -14,9 +14,9 @@ public interface SalesService {
 	
 	public Sales findSalesBysNo(int sNo);
 	
-	public int add(Sales sales);
+	public int add(Sales sales) throws Exception;
 	
-	public int update(Sales sales);
+	public int update(Sales sales) throws Exception;
 	
 	public void deleteBysNo(int sNo);
 

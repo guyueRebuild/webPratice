@@ -26,7 +26,7 @@ import com.iTeam.util.WebContextUtil;
 @Aspect
 public class SecurityAspect {
 
-   /** Log4j日志处理(@author: rico) */
+  
    private static final Logger log = Logger.getLogger(SecurityAspect.class);
 
    private TokenManager tokenManager;
@@ -53,6 +53,7 @@ public class SecurityAspect {
        String token = WebContextUtil.getRequest().getHeader(
                MyConstants.DEFAULT_TOKEN_NAME);
        // 检查 token 有效性
+       log.debug("========================================================================:"+token);
        if (!tokenManager.checkToken(token)) {
            String message = String.format("token [%s] is invalid", token);
            log.debug("message : " + message);

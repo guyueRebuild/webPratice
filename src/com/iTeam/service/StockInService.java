@@ -20,10 +20,10 @@ public interface StockInService {
 	public int getTotal(Map<String,Object> map);
 
 	// 添加入库信息
-	public int addStockIn(StockIn stockIn);
+	public int addStockIn(StockIn stockIn) throws Exception;
 
 	// 修改入库信息
-	public int updateStockIn(StockIn stockIn);
+	public int updateStockIn(StockIn stockIn)throws Exception;
 
 	// 删除入库信息
 	public int deleteByStockInNo(int stockInNo);

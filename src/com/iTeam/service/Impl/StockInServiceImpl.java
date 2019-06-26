@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.iTeam.dao.StockInDao;
 import com.iTeam.model.StockIn;
 import com.iTeam.service.StockInService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 /**
  * 实现入库业务逻辑层和调用mapper层进行数据操作
@@ -36,13 +37,21 @@ public class StockInServiceImpl implements StockInService {
 	}
 
 	@Override
-	public int addStockIn(StockIn stockIn) {
-		return stockInDao.addStockIn(stockIn);
+	public int addStockIn(StockIn stockIn) throws Exception {
+		try {
+			return stockInDao.addStockIn(stockIn);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 	}
 
 	@Override
-	public int updateStockIn(StockIn stockIn) {
-		return stockInDao.updateStockIn(stockIn);
+	public int updateStockIn(StockIn stockIn) throws Exception {
+		try {
+			return stockInDao.updateStockIn(stockIn);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 	}
 
 	@Override

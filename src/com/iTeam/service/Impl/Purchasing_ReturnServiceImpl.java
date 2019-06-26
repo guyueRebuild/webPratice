@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.iTeam.dao.Purchasing_ReturnDao;
 import com.iTeam.model.Purchasing_Return;
 import com.iTeam.service.Purchasing_ReturnService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @Service("Purchasing_ReturnService")
 public class Purchasing_ReturnServiceImpl implements Purchasing_ReturnService {
@@ -28,13 +29,21 @@ public class Purchasing_ReturnServiceImpl implements Purchasing_ReturnService {
 	}
 
 	@Override
-	public int add(Purchasing_Return purchasing_Return) {
-		return purchasing_ReturnDao.add(purchasing_Return);
+	public int add(Purchasing_Return purchasing_Return) throws Exception {
+		try {
+			return purchasing_ReturnDao.add(purchasing_Return);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 	}
 
 	@Override
-	public int update(Purchasing_Return purchasing_Return) {
-		return purchasing_ReturnDao.update(purchasing_Return);
+	public int update(Purchasing_Return purchasing_Return) throws Exception {
+		try {
+			return purchasing_ReturnDao.update(purchasing_Return);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("更新失败");
+		}
 	}
 
 	@Override

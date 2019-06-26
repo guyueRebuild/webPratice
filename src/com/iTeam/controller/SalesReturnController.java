@@ -69,9 +69,10 @@ public class SalesReturnController {
 	 * 添加退货信息
 	 * @param sr
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/salesReturn",method = RequestMethod.POST,produces = PRODUCES)
-	public MyResponse addReturnSales(@RequestBody SalesReturn sr) {
+	public MyResponse addReturnSales(@RequestBody SalesReturn sr) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.add(sr);
@@ -87,9 +88,10 @@ public class SalesReturnController {
 	 * 修改销售回退信息
 	 * @param sr
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/salesReturn",method = RequestMethod.PUT,produces = PRODUCES)
-	public MyResponse updateSalesReturn(@RequestBody SalesReturn sr){
+	public MyResponse updateSalesReturn(@RequestBody SalesReturn sr) throws Exception{
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.update(sr);

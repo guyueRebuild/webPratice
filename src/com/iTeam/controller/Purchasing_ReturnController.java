@@ -76,10 +76,10 @@ public class Purchasing_ReturnController {
 	 * 提交商品信息
 	 * @param purchasing_Return
 	 * @return
-	 * @throws IOException
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/purchasing_Return",method = RequestMethod.POST,produces = PRODUCES)
-	public MyResponse addPurchasing_Return(@RequestBody Purchasing_Return purchasing_Return) throws IOException {
+	public MyResponse addPurchasing_Return(@RequestBody Purchasing_Return purchasing_Return) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.add(purchasing_Return);
@@ -95,10 +95,10 @@ public class Purchasing_ReturnController {
 	 * 修改采购退货信息
 	 * @param purchasing_Return
 	 * @return
-	 * @throws IOException
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/purchasing_Return",method = RequestMethod.PUT,produces = PRODUCES)
-	public MyResponse updatePurchasing_Return(@RequestBody Purchasing_Return purchasing_Return) throws IOException {
+	public MyResponse updatePurchasing_Return(@RequestBody Purchasing_Return purchasing_Return) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.update(purchasing_Return);

@@ -94,7 +94,7 @@ public class SalesController {
 	
 	
 	@RequestMapping(value = "/sales",method = RequestMethod.POST,produces = PRODUCES)
-	public MyResponse addSales(@RequestBody Sales sales) {
+	public MyResponse addSales(@RequestBody Sales sales) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.add(sales);
@@ -107,7 +107,7 @@ public class SalesController {
 	}
 	
 	@RequestMapping(value = "/sales",method = RequestMethod.PUT,produces = PRODUCES)
-	public MyResponse updateSales(@RequestBody Sales sales){
+	public MyResponse updateSales(@RequestBody Sales sales) throws Exception{
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.update(sales);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.iTeam.dao.PurchasingDao;
 import com.iTeam.model.Purchasing;
 import com.iTeam.service.PurchasingService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @Service("PurchasingService")
 public class PurchasingServiceImpl implements PurchasingService {
@@ -28,13 +29,21 @@ public class PurchasingServiceImpl implements PurchasingService {
 	}
 
 	@Override
-	public int add(Purchasing purchasing) {
-		return purchasingDao.add(purchasing);
+	public int add(Purchasing purchasing) throws Exception {
+		try {
+			return purchasingDao.add(purchasing);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 	}
 
 	@Override
-	public int update(Purchasing purchasing) {
-		return purchasingDao.update(purchasing);
+	public int update(Purchasing purchasing) throws Exception {
+		try {
+			return purchasingDao.update(purchasing);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("更新失败");
+		}
 	}
 
 	@Override

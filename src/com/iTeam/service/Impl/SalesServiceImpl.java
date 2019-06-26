@@ -12,6 +12,7 @@ import com.iTeam.model.Client;
 import com.iTeam.model.Goods;
 import com.iTeam.model.Sales;
 import com.iTeam.service.SalesService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 /**
  * 
@@ -33,14 +34,22 @@ public class SalesServiceImpl implements SalesService {
 	}
 
 	@Override
-	public int add(Sales sales) {
-		return salesDao.add(sales);
+	public int add(Sales sales) throws Exception {
+		try {
+			return salesDao.add(sales);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 		
 	}
 
 	@Override
-	public int update(Sales sales) {
-		return salesDao.update(sales);
+	public int update(Sales sales) throws Exception {
+		try {
+			return salesDao.update(sales);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("更新失败");
+		}
 	}
 
 	@Override

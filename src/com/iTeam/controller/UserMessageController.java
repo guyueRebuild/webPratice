@@ -172,6 +172,7 @@ public class UserMessageController {
 	@RequestMapping("/logout")
 	public MyResponse logout(HttpServletRequest request){
 		String token = request.getHeader(MyConstants.DEFAULT_TOKEN_NAME);
+		System.out.println(token);
 		tokenManager.deleteToken(token);
 		log.debug("Logout Success...");
 		return new MyResponse().success();

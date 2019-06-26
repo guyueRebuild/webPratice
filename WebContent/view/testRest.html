@@ -5,24 +5,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="http://localhost:8080/JXCMS2/jquery-easyui-1.3.3/jquery.min.js"></script>
 <script type="text/javascript">
-	/* var user={userName:'管理员',password:'123'};	
-	var userStr=JSON.stringify(user);
-	$.ajax({
-		url: 'http://localhost:8080/JXCMS2/login',
-		type:'post',
-		headers: {
-	        Accept: "application/json; charset=utf-8"
-	    },
-	    contentType: "application/json;charset=UTF-8",
-		data:userStr,
-		success: function(res) {
-				console.log(res)
-			},
-		error: function(err) {
-			console.log(err)
-			}
-		
-	}) */
+	
 	/*
 	$.ajax({
 		url: 'http://localhost:8080/JXCMS2/users/h/1/10',
@@ -81,8 +64,8 @@
 					console.log(res)
 				},
 			}); 
-			 */
-		 $.ajax({
+		/* 	 */
+		  $.ajax({
 			  url: 'http://localhost:8080/JXCMS2/inventorySearch',
 			  type: 'get',
 			  data:{
@@ -94,9 +77,44 @@
 			  success: function(res) {
 					console.log(res)
 				},
-			}); 
+			});  
 		
-		 
+		  $.ajax({
+			  url: 'http://localhost:8080/JXCMS2/stockIns',
+			  type: 'get',
+			 
+			  contentType: "application/json;charset=UTF-8",
+			  success: function(res) {
+					console.log(res)
+				},
+			});   
+		
+		  
+		
+			var user={userName:'管理员',password:'123'};	
+			var userStr=JSON.stringify(user);
+			$.ajax({
+				url: 'http://localhost:8080/JXCMS2/login',
+				type:'post',
+				headers: {
+			        Accept: "application/json; charset=utf-8"
+			    },
+			    contentType: "application/json;charset=UTF-8",
+				data:userStr,
+				success: function(res) {
+						console.log(res)
+					},
+				error: function(err) {
+					console.log(err)
+					}
+				
+			})   
+		    $.ajax({
+			  url: 'http://localhost:8080/JXCMS2/logout',
+			  success: function(res) {
+					console.log(res)
+				},
+			});    
 		/*  var ids=[10014];
 		 var ids=JSON.stringify(ids);
 		 $.ajax({
@@ -121,7 +139,7 @@
 					},
 				}); */
 			 
-				 var goodsType={typeNo:10016,type:"HHHX"};
+				/*  var goodsType={typeNo:10016,type:"HHHX"};
 				var type=JSON.stringify(goodsType);
 				 $.ajax({
 					  url: 'http://localhost:8080/JXCMS2/goodsType',
@@ -131,7 +149,19 @@
 					  success: function(res) {
 							console.log(res)
 						},
-					});  
+					});   */
+					
+				/* 	var puc={goodsNo:10001,storageNo:10001,dateIn:new Date()};
+					var puc=JSON.stringify(puc);
+					 $.ajax({
+						  url: 'http://localhost:8080/JXCMS2/purchasing',
+						  type: 'post',
+						  data:puc,
+						  contentType: "application/json;charset=UTF-8",
+						  success: function(res) {
+								console.log(res)
+							},
+						}); */
 	</script>
 </head>
 <body>

@@ -14,10 +14,10 @@ public interface PurchasingService {
 	public Long getTotal(Map<String,Object> map);
 	
 	//添加采购信息
-	public int add(Purchasing purchasing);
+	public int add(Purchasing purchasing) throws Exception;
 	
 	//更新采购信息
-	public int update(Purchasing purchasing);
+	public int update(Purchasing purchasing)throws Exception;
 	
 	//根据采购编号删除采购信息
 	public int delete(Integer id);

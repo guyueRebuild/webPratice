@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Component;
 
+import com.iTeam.exception.TokenException;
 import com.iTeam.util.CodecUtil;
 import com.iTeam.util.StringUtil;
 
@@ -34,8 +35,15 @@ public class SimpleTokenManager implements TokenManager{
 	 * Token删除(用户登出时，删除Token)
 	 */
 	@Override
-	public void deleteToken(String token) {
-		tokenMap.remove(token);
+	public void deleteToken(String token){
+		try {
+			String remove = tokenMap.remove(token);
+			if(remove==null) {
+				throw new TokenException("token:["+token+"]不存在");
+			}
+		}catch(NullPointerException e) {
+			throw new TokenException("token:["+token+"]不存在");
+		}
 	}
 
 }

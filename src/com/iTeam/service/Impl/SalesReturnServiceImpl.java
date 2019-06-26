@@ -12,6 +12,7 @@ import com.iTeam.dao.SalesReturnDao;
 import com.iTeam.model.Sales;
 import com.iTeam.model.SalesReturn;
 import com.iTeam.service.SalesReturnService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @Service
 @Transactional
@@ -40,15 +41,21 @@ public class SalesReturnServiceImpl implements SalesReturnService {
 	}
 
 	@Override
-	public int add(SalesReturn sr) {
-
-		return srDao.add(sr);
+	public int add(SalesReturn sr) throws Exception {
+		try {
+			return srDao.add(sr);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 	}
 
 	@Override
-	public int update(SalesReturn sr) {
-
-		return srDao.update(sr);
+	public int update(SalesReturn sr) throws Exception {
+		try {
+			return srDao.update(sr);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 	}
 
 	@Override

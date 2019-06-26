@@ -70,14 +70,12 @@ public class StockInController {
 		PageBean pageBean = PageUtil.getDefaultPage(rows, page);
 		Map<String, Object> map = PageUtil.getMapFromPage(pageBean, "handler", handler);
 		Map<String,Object> resultData=new HashMap<String, Object>();		
-		MyResponse response = new MyResponse();
 		List<StockIn> stockInsList = service.findAll(map);
 		int total = service.getTotal(map);
 		JSONArray jsonArray = PageUtil.ProcessDataJsonValue(java.util.Date.class, stockInsList, "yyyy-MM-dd HH:mm:ss");
 		resultData.put("list", jsonArray);
 		resultData.put("total", total);
-		response.success(response);
-		return response;
+		return new MyResponse().success(resultData);
 	}
 
 	/**
@@ -87,7 +85,7 @@ public class StockInController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/stockIn", method = RequestMethod.POST, produces = PRODUCES)
-	public MyResponse addStockIn(@RequestBody StockIn stockIn) throws IOException {
+	public MyResponse addStockIn(@RequestBody StockIn stockIn) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.addStockIn(stockIn);
@@ -109,7 +107,7 @@ public class StockInController {
 	 */
 	@RequestMapping(value = "/stockIn/{storageNoBefore}", method = RequestMethod.PUT, produces = PRODUCES)
 	public MyResponse updateStockIn(@RequestBody StockIn stockIn, @PathVariable("storageNoBefore") String storageNoBefore)
-			throws IOException {
+			throws Exception {
 		// 修改前仓库编号
 		int forward = Integer.parseInt(storageNoBefore);
 		// 修改后仓库编号

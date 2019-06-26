@@ -19,10 +19,10 @@ public interface SalesReturnService {
 	public Sales findSalesBysNo(int sNo);
 	
 	//新增一条销售退货信息
-	public int add(SalesReturn sr);
+	public int add(SalesReturn sr) throws Exception;
 	
 	//修改销售退货信息
-	public int update(SalesReturn sr);
+	public int update(SalesReturn sr) throws Exception;
 	
 	//根据编号进行删除
 	public void deleteBysNo(int sNo);

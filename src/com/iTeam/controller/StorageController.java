@@ -44,14 +44,13 @@ public class StorageController {
 			@RequestParam(value = "storageName",required = false)String storageName) throws IOException {
 		PageBean pageBean = PageUtil.getDefaultPage(rows, page);
 		Map<String,Object> map = PageUtil.getMapFromPage(pageBean, "storageName", storageName);
-		MyResponse response=new MyResponse();
 		Map<String,Object> resultData=new HashMap<String, Object>();			
 		List<Storage> storageList = service.getStorageList(map);
 		Long total = service.getTotal(map);
 		JSONArray jsonArray = PageUtil.ProcessDataJsonValue(java.util.Date.class, storageList, "yyyy-MM-dd HH:mm:ss");
 		resultData.put("list", jsonArray);
 		resultData.put("total", total);
-		return response.success(resultData);
+		return new MyResponse().success(resultData);
 	}
 	
 	@RequestMapping(value="/allstorages",method=RequestMethod.GET)
