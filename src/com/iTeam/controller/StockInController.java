@@ -86,7 +86,7 @@ public class StockInController {
 	 * @param stockIn
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/StockIn", method = RequestMethod.POST, produces = PRODUCES)
+	@RequestMapping(value = "/stockIn", method = RequestMethod.POST, produces = PRODUCES)
 	public MyResponse addStockIn(@RequestBody StockIn stockIn) throws IOException {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
@@ -107,11 +107,11 @@ public class StockInController {
 	 * @param stockIn
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/StockIn/{stockInNo}", method = RequestMethod.PUT, produces = PRODUCES)
-	public MyResponse updateStockIn(@RequestBody StockIn stockIn, @PathVariable("stockInNo") String stockInNo)
+	@RequestMapping(value = "/stockIn/{storageNoBefore}", method = RequestMethod.PUT, produces = PRODUCES)
+	public MyResponse updateStockIn(@RequestBody StockIn stockIn, @PathVariable("storageNoBefore") String storageNoBefore)
 			throws IOException {
 		// 修改前仓库编号
-		int forward = Integer.parseInt(stockInNo);
+		int forward = Integer.parseInt(storageNoBefore);
 		// 修改后仓库编号
 		int after = stockIn.getStorageNo();
 
@@ -141,17 +141,14 @@ public class StockInController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/stockIn", method = RequestMethod.DELETE, produces = PRODUCES)
-	public MyResponse deleteByStockInNo(@RequestBody String ids) throws Exception {
-		String substring = ids.substring(1, ids.length()-1);
-		String[] idsStr = substring.split(",");
-		for (int i = 0; i < idsStr.length; i++) {
-			int storageNo = service.getStorageByStockInNo(Integer.parseInt(idsStr[i]));
-			service.deleteByStockInNo(Integer.parseInt(idsStr[i]));
+	public MyResponse deleteByStockInNo(@RequestBody List<Integer> ids) throws Exception {
+		for (int i = 0; i < ids.size(); i++) {
+			int storageNo = service.getStorageByStockInNo(ids.get(i));
+			service.deleteByStockInNo(ids.get(i));
 			// 更新该仓库当前容量
 			updateStorage(storageNo);
 		}
-		MyResponse response = new MyResponse();
-		return response.success();
+		return new MyResponse().success();
 	}
 
 	public void updateStorage(int storageNo) {

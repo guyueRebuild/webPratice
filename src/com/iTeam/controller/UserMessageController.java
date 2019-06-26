@@ -119,7 +119,7 @@ public class UserMessageController {
 	 * @throws IOException 
 	 */
 	@RequestMapping(value="/user",method=RequestMethod.POST,produces = PRODUCES)
-	public MyResponse save(@RequestBody @Valid UserMessage userMessage) throws IOException{
+	public MyResponse save(@RequestBody @Valid UserMessage userMessage) throws Exception{
 		MyResponse myResponse=new MyResponse();
 		int resultNum = 0;
 		resultNum = userMessageService.add(userMessage);
@@ -135,9 +135,10 @@ public class UserMessageController {
 	 * 修改用户信息
 	 * @param userMessage
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/user",method=RequestMethod.PUT,produces = PRODUCES)
-	public MyResponse update(@RequestBody @Valid UserMessage userMessage) {
+	public MyResponse update(@RequestBody @Valid UserMessage userMessage) throws Exception {
 		MyResponse response=new MyResponse();
 		int resultNum = 0;
 		resultNum = userMessageService.update(userMessage);
@@ -156,15 +157,12 @@ public class UserMessageController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/user",method=RequestMethod.DELETE,produces = PRODUCES)
-	public MyResponse delete(@RequestBody String ids) throws IOException {
-		String substring = ids.substring(1, ids.length()-1);
+	public MyResponse delete(@RequestBody List<Integer> ids) throws IOException {
 		//支持删除多条记录
-		String[] userIds = substring.split(",");
-		MyResponse myResponse=new MyResponse();
-		for(int i = 0;i < userIds.length;i++) {
-			userMessageService.delete(Integer.parseInt(userIds[i]));
+		for(int i = 0;i < ids.size();i++) {
+			userMessageService.delete(ids.get(i));
 		}
-		return myResponse.success();
+		return new MyResponse().success();
 	}
 	/**
 	 * 退出登录
@@ -176,7 +174,6 @@ public class UserMessageController {
 		String token = request.getHeader(MyConstants.DEFAULT_TOKEN_NAME);
 		tokenManager.deleteToken(token);
 		log.debug("Logout Success...");
-		MyResponse myResponse=new MyResponse();
-		return myResponse.success();
+		return new MyResponse().success();
 	}
 }

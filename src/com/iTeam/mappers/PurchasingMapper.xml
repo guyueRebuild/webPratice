@@ -5,18 +5,21 @@
 
 	<!-- 封装Purchasing类的Map -->
 	<resultMap type="Purchasing" id="PurchasingResult">
-		<result property="pNo" column="pNo"/>
-		<result property="goodsNo" column="goodsNo"/>
-		<result property="quantityIn" column="quantityIn"/>
-		<result property="priceIn" column="priceIn"/>
-		<result property="dateIn" column="dateIn"/>
-		<result property="handler" column="handler"/>
-		<result property="pRemark" column="pRemark"/>
+		<result property="pNo" column="pNo" />
+		<result property="goodsNo" column="goodsNo" />
+		<result property="quantityIn" column="quantityIn" />
+		<result property="priceIn" column="priceIn" />
+		<result property="dateIn" column="dateIn" />
+		<result property="handler" column="handler" />
+		<result property="pRemark" column="pRemark" />
 	</resultMap>
-	
+
 	<!-- 实现getPurchasingList方法 -->
-	<select id="getPurchasingList" resultType="Purchasing" parameterType="Map">
-		select g.goodsName,s.storageName,p.* from purchasing p join goods g on g.goodsNo = p.goodsNo inner join storage s on s.storageNo = p.storageNo
+	<select id="getPurchasingList" resultType="Purchasing"
+		parameterType="Map">
+		select g.goodsName,s.storageName,p.* from purchasing p join goods g on
+		g.goodsNo = p.goodsNo inner join storage s on s.storageNo =
+		p.storageNo
 		<where>
 			<if test="goodsName != null and goodsName != ''">
 				and goodsName like #{goodsName}
@@ -26,7 +29,7 @@
 			limit #{start},#{size}
 		</if>
 	</select>
-	
+
 	<!-- 实现getTotal方法 -->
 	<select id="getTotal" resultType="Long">
 		select COUNT(*) from purchasing
@@ -36,12 +39,13 @@
 			</if>
 		</where>
 	</select>
-	
+
 	<!-- 实现add方法 -->
 	<insert id="add" parameterType="Purchasing">
-		insert into purchasing values(null,#{goodsNo},#{quantityIn},#{priceIn},#{dateIn},#{handler},#{pRemark},#{storageNo})
+		insert into purchasing
+		values(null,#{goodsNo},#{quantityIn},#{priceIn},#{dateIn},#{handler},#{pRemark},#{storageNo})
 	</insert>
-	
+
 	<!-- 实现update方法 -->
 	<update id="update" parameterType="Purchasing">
 		update purchasing
@@ -66,13 +70,50 @@
 			</if>
 			<if test="storageNo != null and storageNo != ''">
 				storageNo = #{storageNo},
-			</if>			
+			</if>
 		</set>
 		where pNo = #{pNo}
 	</update>
-	
+
 	<!-- 实现delete方法 -->
 	<delete id="delete" parameterType="Integer">
-		delete from purchasing where pNO = #{pNo}
+		delete from purchasing where
+		pNO = #{pNo}
 	</delete>
+
+
+	<delete id="deleteBatch" parameterType="list">
+		delete from purchasing where pNO in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<!-- =========根据商品编号删除============== -->
+	<delete id="deleteByGoodsNo" parameterType="Integer">
+		DELETE FROM purchasing WHERE goodsNo=#{goodsNo};
+	</delete>
+
+	<delete id="deleteByGoodsNos" parameterType="list">
+		delete from purchasing where goodsNo in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- =========根据仓库编号删除============== -->
+	<delete id="deleteByStorageNo" parameterType="Integer">
+		DELETE FROM purchasing WHERE storageNo=#{storageNo};
+	</delete>
+
+	<delete id="deleteByStorageNos" parameterType="list">
+		delete from purchasing where storageNo in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
 </mapper>

@@ -27,4 +27,11 @@ public interface ProviderDao {
 	
 	//根据商品编号删除商品信息
 	public int delete(Integer id);	
+	
+	/**
+	 * 批量删除供应商信息
+	 * @param ids
+	 * @return
+	 */
+	public int deleteBatch(List<Integer> ids);
 }

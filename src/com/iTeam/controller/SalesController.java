@@ -121,14 +121,11 @@ public class SalesController {
 	}
 	
 	@RequestMapping(value = "/sales",method = RequestMethod.DELETE,produces = PRODUCES)
-	public MyResponse deleteSales(@RequestBody String ids){
-		String substring = ids.substring(1, ids.length()-1);
-		MyResponse response = new MyResponse();
-		String[] sNo = substring.split(",");
-		for(int i = 0;i < sNo.length;i++) {
-			service.deleteBysNo(Integer.parseInt(sNo[i]));
+	public MyResponse deleteSales(@RequestBody List<Integer> ids){
+		for(int i = 0;i < ids.size();i++) {
+			service.deleteBysNo(ids.get(i));
 		}
-		return response.success();
+		return new MyResponse().success();
 	}
 
 }

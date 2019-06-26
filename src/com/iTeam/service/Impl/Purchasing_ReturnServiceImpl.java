@@ -42,4 +42,28 @@ public class Purchasing_ReturnServiceImpl implements Purchasing_ReturnService {
 		return purchasing_ReturnDao.delete(id);
 	}
 
+	@Override
+	public int deleteBatch(List<Integer> ids) {
+		return purchasing_ReturnDao.deleteBatch(ids);
+	}
+
+	@Override
+	public int deleteByGoodsNo(Integer goodsNo) {
+		return purchasing_ReturnDao.deleteByGoodsNo(goodsNo);
+	}
+
+	@Override
+	public int deleteByGoodsNos(List<Integer> goodsNos) {
+		return purchasing_ReturnDao.deleteByGoodsNos(goodsNos);
+	}
+
+	@Override
+	public int deleteByStorageNo(Integer storageNo) {
+		return purchasing_ReturnDao.deleteByStorageNo(storageNo);
+	}
+
+	@Override
+	public int deleteByStorageNos(List<Integer> storageNos) {
+		return purchasing_ReturnDao.deleteByStorageNos(storageNos);
+	}
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.iTeam.dao.UserMessageDao;
 import com.iTeam.model.UserMessage;
 import com.iTeam.service.UserMessageService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @Service("UserMessageService")
 public class UserMessageServiceImpl implements UserMessageService {
@@ -33,18 +34,31 @@ public class UserMessageServiceImpl implements UserMessageService {
 	}
 
 	@Override
-	public int add(UserMessage userMessage) {
-		return userMessageDao.add(userMessage);
+	public int add(UserMessage userMessage) throws Exception {
+		try {
+			return userMessageDao.add(userMessage);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 	}
 
 	@Override
-	public int update(UserMessage userMessage) {
-		return userMessageDao.update(userMessage);
+	public int update(UserMessage userMessage) throws Exception {
+		try {
+			return userMessageDao.update(userMessage);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("更新失败");
+		}
 	}
 
 	@Override
 	public int delete(Integer userNo) {
 		return userMessageDao.delete(userNo);
+	}
+
+	@Override
+	public int deleteBatch(List<Integer> userNos) {
+		return userMessageDao.deleteBatch(userNos);
 	}
 
 }

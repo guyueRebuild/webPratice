@@ -53,7 +53,94 @@
       where sNo=#{sNo}
   </update>	
   
+ 
+  
+  <!-- 根据客户No删除用户信息 -->
+  <delete id="deleteByClientNo" parameterType="Integer">
+ 	 DELETE FROM sales WHERE clientNo=#{clientNo};
+  </delete>
+  
+  <!-- 根据客户No批量删除用户信息 -->
+  <delete id="deleteByClientNos" parameterType="list">
+  	delete from sales where clientNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+  </delete> 
+ 
+  
+  <!-- 根据商品No删除销售信息 -->
+  <delete id="deleteByGoodsNo" parameterType="Integer">
+ 	 DELETE FROM sales WHERE goodsNo=#{goodsNo};
+  </delete>
+  
+  <!-- 根据商品No批量删除销售信息 -->
+  <delete id="deleteByGoodsNos" parameterType="list">
+  	delete from sales where goodsNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+  </delete> 
+  
+  
+   <!-- 根据仓库No删除销售信息 -->
+  <delete id="deleteByStorageNo" parameterType="Integer">
+ 	 DELETE FROM sales WHERE storageNo=#{storageNo};
+  </delete>
+  
+  <!-- 根据仓库No批量删除销售信息 -->
+  <delete id="deleteByStorageNos" parameterType="list">
+  	delete from sales where storageNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+  </delete> 
+  
+  
+  <!-- 根据销售信息删除销售信息 -->
+   <!-- <delete id="deleteBySalse"  parameterType="Inteter">
+       delete from sales
+       <where>
+       <if test="clientNo != null and clientNo != ''">
+       or clientNo = #{clientNo}
+       </if>
+        <if test="goodsNo != null and goodsNo != ''">
+       or goodsNo = #{goodsNo}
+       </if>
+      <if test="storageNo != null and storageNo != ''">
+       or storageNo = #{storageNo}
+       </if>
+       </where>
+    </select>
+   <delete id="deleteBySalse"  parameterType="Inteter">
+       delete from sales
+       <where>
+       </if>
+       <if test="clientNo != null and clientNo != ''">
+       or clientNo = #{clientNo}
+       </if>
+        <if test="goodsNo != null and goodsNo != ''">
+       or goodsNo = #{goodsNo}
+       </if>
+      <if test="storageNo != null and storageNo != ''">
+       or storageNo = #{storageNo}
+       </if>
+       </where>
+    </delete>
+  -->
+ <!-- 根据销售信息编号删除销售信息 -->
   <delete id="deleteBysNo" parameterType="Integer">
       delete from sales where sNo=#{sNo}
+  </delete>
+ <!-- 根据销售信息编号删除销售信息 -->
+  <delete id="deleteBatch" parameterType="list">
+		delete from sales where sNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
   </delete>
 </mapper>

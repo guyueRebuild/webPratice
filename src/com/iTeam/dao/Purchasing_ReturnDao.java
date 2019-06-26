@@ -28,4 +28,20 @@ public interface Purchasing_ReturnDao {
 	//根据采购编号删除采购退货信息
 	public int delete(Integer id);
 	
+	
+	/**
+	 * 批量删除采购退货信息
+	 * @param ids
+	 * @return
+	 */
+	public int deleteBatch(List<Integer> ids);
+	
+	public int deleteByGoodsNo(Integer goodsNo);
+	
+	public int deleteByGoodsNos(List<Integer> goodsNos);
+	
+	public int deleteByStorageNo(Integer storageNo);
+	
+	public int deleteByStorageNos(List<Integer> storageNos);
+	
 }

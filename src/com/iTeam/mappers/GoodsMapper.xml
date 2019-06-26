@@ -24,6 +24,28 @@
 		</if>
 	</select>
 	
+	<!-- =================根据商品类型查询商品ID=================== -->
+	<select id="getGoodsNoListByTypeNo"  parameterType="int">
+		SELECT goodsNo FROM goods where typeNo=#{typeNo};
+	</select>
+	
+	<select id="getGoodNoListByTypeNos"  parameterType="list">
+		SELECT goodsNo FROM goods where typeNo in
+		<foreach collection="list" item="item" index="index"
+		open="(" separator="," close=")"></foreach>
+	</select>
+	
+	<!-- =================根据供应商编号查询商品ID=================== -->
+	<select id="getGoodsNoListByProviderNo"  parameterType="int">
+		SELECT goodsNo FROM goods where providerNo=#{providerNo};
+	</select>
+	
+	<select id="getGoodNoListByProviderNos"  parameterType="list">
+		SELECT goodsNo FROM goods where providerNo in
+		<foreach collection="list" item="item" index="index"
+		open="(" separator="," close=")"></foreach>
+	</select>
+	
 	<select id="getTotal" resultType="Long">
 		select COUNT(*) from goods
 		<where>
@@ -45,4 +67,14 @@
 	<delete id="delete" parameterType="Integer">
 		delete from goods where goodsNo=#{goodsNo}
 	</delete>
+	
+	
+	<delete id="deleteBatch" parameterType="list">
+		delete from goods where goodsNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+	</delete>
+	
 </mapper>

@@ -3,7 +3,6 @@ package com.iTeam.service;
 import java.util.List;
 import java.util.Map;
 
-import com.iTeam.model.StockIn;
 import com.iTeam.model.StockOut;
 
 /**
@@ -22,14 +21,29 @@ public interface StockOutService {
 	public int getTotal(Map<String, Object> map);
 
 	// 添加出库信息
-	public int addStockOut(StockOut StockOut);
+	public int addStockOut(StockOut stockOut);
 
 	// 修改出库信息
-	public int updateStockOut(StockOut StockOut);
+	public int updateStockOut(StockOut stockOut);
 
 	// 删除出库信息
-	public int deleteByStockOutNo(int StockOutNo);
+	public int deleteByStockOutNo(int stockOutNo);
+	
+	/**
+	 * 批量删除出库信息
+	 * @param StockOutNos
+	 * @return
+	 */
+	public int deleteByStockOutNos(List<Integer> stockOutNos);
 	
 	// 根据出库单号查询出库仓库
-	public int getStorageByStockInNo(int stockInNo);
+	public int getStorageByStockOutNo(int stockOutNo);
+	
+	public int deleteByGoodsNo(Integer goodsNo);
+	
+	public int deleteByGoodsNos(List<Integer> goodsNos);
+	
+	public int deleteByStorageNo(Integer storageNo);
+	
+	public int deleteByStorageNos(List<Integer> storageNos);
 }

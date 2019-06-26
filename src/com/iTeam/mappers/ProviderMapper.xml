@@ -68,5 +68,13 @@
 	<delete id="delete" parameterType="Integer">
 		delete from provider where providerNo = #{providerNo}
 	</delete>
+	
+	<delete id="deleteBatch" parameterType="list">
+		delete from provider where providerNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+	</delete>
 
 </mapper>

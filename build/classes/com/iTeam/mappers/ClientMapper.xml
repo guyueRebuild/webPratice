@@ -25,6 +25,7 @@
 		</if>
 	</select>
 	
+	
 	<!-- 实现getTotal方法 -->
 	<select id="getTotal" resultType="Long">
 		select COUNT(*) from client
@@ -63,5 +64,13 @@
 	<!-- 实现delete方法 -->
 	<delete id="delete" parameterType="Integer">
 		delete from client where clientNo = #{clientNo}
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="list">
+		delete from client where clientNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
 	</delete>
 </mapper>

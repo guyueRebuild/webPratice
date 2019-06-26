@@ -51,5 +51,38 @@
 	<select id="getStorageByStockInNo" resultType="Integer" parameterType="Integer">
 		select storageNo from stock_in where stockInNo=#{stockInNo}
 	</select>
+	
+	 <delete id="deleteBatch" parameterType="list">
+		delete from stock_in where stockInNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+  </delete>
+  
+  <!-- =========根据商品编号删除============== -->
+	<delete id="deleteByGoodsNo" parameterType="Integer">
+		DELETE FROM stock_in WHERE goodsNo=#{goodsNo};
+	</delete>
 
+	<delete id="deleteByGoodsNos" parameterType="list">
+		delete from stock_in where goodsNo in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- =========根据仓库编号删除============== -->
+	<delete id="deleteByStorageNo" parameterType="Integer">
+		DELETE FROM stock_in WHERE storageNo=#{storageNo};
+	</delete>
+
+	<delete id="deleteByStorageNos" parameterType="list">
+		delete from stock_in where storageNo in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
 </mapper>

@@ -65,4 +65,12 @@
 	<delete id="delete" parameterType="Integer">
 	    delete from user_message where userNo=#{userNo}
 	</delete>
+	
+	<delete id="deleteBatch" parameterType="list">
+			delete from user_message where userNo in
+			<foreach item="item" index="index" collection="list"
+	      		open="(" separator="," close=")">
+	        #{item}
+	  		</foreach>
+	</delete>
 </mapper>

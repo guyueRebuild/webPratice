@@ -3,7 +3,6 @@ package com.iTeam.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.iTeam.model.StockIn;
 import com.iTeam.model.StockOut;
 
 /**
@@ -29,5 +28,20 @@ public interface StockOutDao {
 	public int deleteByStockOutNo(int stockOutNo);
 	
 	// 根据出库单号查询出库仓库
-	public int getStorageByStockInNo(int stockInNo);
+	public int getStorageByStockOutNo(int stockOutNo);
+	
+	/**
+	 * 
+	 * @param typeNos
+	 * @return 
+	 */
+	public int deleteBatch(List<Integer> stockOutNos);
+	
+	public int deleteByGoodsNo(Integer goodsNo);
+	
+	public int deleteByGoodsNos(List<Integer> goodsNos);
+	
+	public int deleteByStorageNo(Integer storageNo);
+	
+	public int deleteByStorageNos(List<Integer> storageNos);
 }

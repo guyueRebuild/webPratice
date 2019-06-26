@@ -79,7 +79,7 @@ public class ProviderController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/provider",method = RequestMethod.POST,produces = PRODUCES)
-	public MyResponse addProvider(@RequestBody Provider provider) throws IOException {
+	public MyResponse addProvider(@RequestBody Provider provider) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.add(provider);;
@@ -98,7 +98,7 @@ public class ProviderController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/provider",method = RequestMethod.PUT,produces = PRODUCES)
-	public MyResponse updateProvider(@RequestBody Provider provider) throws IOException {
+	public MyResponse updateProvider(@RequestBody Provider provider) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.update(provider);
@@ -110,13 +110,16 @@ public class ProviderController {
 		return response;
 	}
 
-	//在浏览中通过URL调用deleteProvider这个方法	
+	/**
+	 * 删除供应商信息
+	 * @param ids
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/provider",method = RequestMethod.DELETE,produces = PRODUCES)
-	public MyResponse deleteProvider(@RequestBody String ids)throws Exception{
-		String substring = ids.substring(1, ids.length()-1);
-		String []idsStr=substring.split(",");
-		for(int i=0;i<idsStr.length;i++){
-			service.delete(Integer.parseInt(idsStr[i]));
+	public MyResponse deleteProvider(@RequestBody List<Integer> ids)throws Exception{
+		for(int i=0;i<ids.size();i++){
+			service.delete(ids.get(i));
 		}
 		return new MyResponse().success();
 	}

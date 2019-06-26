@@ -20,12 +20,19 @@ public interface ProviderService {
 	public Long getTotal(Map<String, Object> map);
 	
 	//添加商品信息
-	public int add(Provider provider);
+	public int add(Provider provider) throws Exception;
 	
 	//修改商品信息
-	public int update(Provider provider);
+	public int update(Provider provider) throws Exception;
 	
 	//根据商品编号删除商品信息
 	public int delete(Integer id);
+	
+	/**
+	 * 批量删除供应商信息
+	 * @param ids
+	 * @return
+	 */
+	public int deleteBatch(List<Integer> ids);
 	
 }

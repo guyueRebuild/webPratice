@@ -42,4 +42,11 @@
 		delete from goods_type where typeNo=#{typeNo}
 	</delete>
 	
+	<delete id="deleteBatch" parameterType="list">
+		delete from goods_type where typeNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+	</delete>
 </mapper>

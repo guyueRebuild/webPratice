@@ -63,7 +63,7 @@ public class StorageController {
 	
 	//在浏览中通过URL调用addStorage这个方法	
 	@RequestMapping(value="/storage",method=RequestMethod.POST,produces=PRODUCES)
-	public MyResponse addStorage(@RequestBody Storage storage) throws IOException {
+	public MyResponse addStorage(@RequestBody Storage storage) throws Exception {
 		MyResponse response=new MyResponse();
 		int resultNum = 0;
 		resultNum = service.add(storage);
@@ -77,7 +77,7 @@ public class StorageController {
 	
 	//在浏览中通过URL调用updateStorage这个方法	
 	@RequestMapping(value="/storage",method=RequestMethod.PUT,produces=PRODUCES)
-	public MyResponse updateStorage(@RequestBody Storage storage) throws IOException {
+	public MyResponse updateStorage(@RequestBody Storage storage) throws Exception {
 		MyResponse response=new MyResponse();
 		int resultNum = 0;
 		resultNum = service.update(storage);
@@ -91,14 +91,11 @@ public class StorageController {
 	
 	//在浏览中通过URL调用deleteStorage这个方法
 	@RequestMapping(value="/storage",method=RequestMethod.DELETE,produces=PRODUCES)
-	public MyResponse deleteStorage(@RequestBody String ids)throws Exception{
-		String substring = ids.substring(1, ids.length()-1);
-		String []idsStr=substring.split(",");
-		for(int i=0;i<idsStr.length;i++){
-			service.delete(Integer.parseInt(idsStr[i]));
-			System.out.println(idsStr[i]);
+	public MyResponse deleteStorage(@RequestBody List<Integer> ids)throws Exception{
+		for(int i=0;i<ids.size();i++){
+			service.delete(ids.get(i));
+			System.out.println(ids.get(i));
 		}
-		MyResponse response=new MyResponse();
-		return response.success();
+		return new MyResponse().success();
 	}
 }

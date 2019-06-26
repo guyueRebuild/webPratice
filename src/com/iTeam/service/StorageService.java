@@ -20,13 +20,20 @@ public interface StorageService {
 	public Long getTotal(Map<String, Object> map);
 	
 	//添加仓库信息	
-	public int add(Storage storage);
+	public int add(Storage storage) throws Exception;
 	
 	//更新仓库信息	
-	public int update(Storage storage);
+	public int update(Storage storage) throws Exception;
 	
 	//根据仓库编号删除仓库信息	
 	public int delete(Integer id);
+	
+	/**
+	 * 根据仓库编号批量删除仓库信息
+	 * @param ids
+	 * @return
+	 */
+	public int deleteBatch(List<Integer> ids);
 	
 	//根据仓库编号更新仓库容量
 	public int updateCurrentStorage(Storage storage);

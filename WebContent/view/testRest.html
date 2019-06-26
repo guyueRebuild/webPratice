@@ -61,16 +61,18 @@
 			},
 		});
 		 */
-		/* $.ajax({
+		/*  var client = {client:"AAA"};
+		 var clientJson=JSON.stringify(client);
+		 $.ajax({
 			  url: 'http://localhost:8080/JXCMS2/client',
-			  type: 'get',
+			  type: 'post',
 			  contentType: "application/json;charset=UTF-8",
-			  data: {client:"AAA",page:1,rows:10},
+			  data: clientJson,
 			  success: function(res) {
 					console.log(res)
 				},
-			}); 
-		 */
+			});  */
+		 /*
 		 $.ajax({
 			  url: 'http://localhost:8080/JXCMS2/client',
 			  type: 'get',
@@ -79,18 +81,57 @@
 					console.log(res)
 				},
 			}); 
-		 
+			 */
 		 $.ajax({
 			  url: 'http://localhost:8080/JXCMS2/inventorySearch',
 			  type: 'get',
 			  data:{
-				  inventoryStorageNo:'10001'
+				  inventoryStorageNo:'10001',
+				  page:11,
+				  rows:1,
 			  },
 			  contentType: "application/json;charset=UTF-8",
 			  success: function(res) {
 					console.log(res)
 				},
 			}); 
+		
+		 
+		/*  var ids=[10014];
+		 var ids=JSON.stringify(ids);
+		 $.ajax({
+			  url: 'http://localhost:8080/JXCMS2/client',
+			  type: 'delete',
+			  data:ids,
+			  contentType: "application/json;charset=UTF-8",
+			  success: function(res) {
+					console.log(res)
+				},
+			});   */
+			
+	/* 		var goodsType={type:"HHH"};
+			var type=JSON.stringify(goodsType);
+			 $.ajax({
+				  url: 'http://localhost:8080/JXCMS2/goodsType',
+				  type: 'post',
+				  data:type,
+				  contentType: "application/json;charset=UTF-8",
+				  success: function(res) {
+						console.log(res)
+					},
+				}); */
+			 
+				 var goodsType={typeNo:10016,type:"HHHX"};
+				var type=JSON.stringify(goodsType);
+				 $.ajax({
+					  url: 'http://localhost:8080/JXCMS2/goodsType',
+					  type: 'put',
+					  data:type,
+					  contentType: "application/json;charset=UTF-8",
+					  success: function(res) {
+							console.log(res)
+						},
+					});  
 	</script>
 </head>
 <body>

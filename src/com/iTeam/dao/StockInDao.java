@@ -27,6 +27,16 @@ public interface StockInDao {
 
 	// 删除入库信息
 	public int deleteByStockInNo(int stockInNo);
+	
+	public int deleteByStockInNos(List<Integer> stockInNos);
 	// 根据入库单号查询入库仓库
 	public int getStorageByStockInNo(int stockInNo);
+	
+	public int deleteByGoodsNo(Integer goodsNo);
+	
+	public int deleteByGoodsNos(List<Integer> goodsNos);
+	
+	public int deleteByStorageNo(Integer storageNo);
+	
+	public int deleteByStorageNos(List<Integer> storageNos);
 }

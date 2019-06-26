@@ -28,5 +28,12 @@ public interface StorageDao {
 	//根据仓库编号删除仓库信息
 	public int delete(Integer id);
 	
+	/**
+	 * 根据仓库编号批量删除仓库信息
+	 * @param ids
+	 * @return 
+	 */
+	public int deleteBatch(List<Integer> ids);
+	
 	public int updateCurrentStorage(Storage storage);
 }

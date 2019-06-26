@@ -34,17 +34,24 @@ public interface UserMessageService {
 	 * @param userMessage
 	 * @return
 	 */
-	public int add(UserMessage userMessage);
+	public int add(UserMessage userMessage) throws Exception;
 	/**
 	 * 修改用户
 	 * @param userMessage
 	 * @return
+	 * @throws Exception 
 	 */
-	public int update(UserMessage userMessage);
+	public int update(UserMessage userMessage) throws Exception;
 	/**
 	 * 删除用户
 	 * @param userMessage
 	 * @return
 	 */
 	public int delete(Integer userNo);
+	/**
+	 * 删除用户
+	 * @param userNos
+	 * @return
+	 */
+	public int deleteBatch(List<Integer> userNos);
 }

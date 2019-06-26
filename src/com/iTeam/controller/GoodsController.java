@@ -114,11 +114,9 @@ public class GoodsController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/goods",method = RequestMethod.DELETE,produces = PRODUCES)
-	public MyResponse deleteGoods(@RequestBody String ids) throws IOException {
-		String substring = ids.substring(1, ids.length()-1);
-		String[] goodsNo = substring.split(",");
-		for(int i = 0;i < goodsNo.length;i++) {
-			service.delete(Integer.parseInt(goodsNo[i]));
+	public MyResponse deleteGoods(@RequestBody List<Integer> ids) throws IOException {
+		for(int i = 0;i < ids.size();i++) {
+			service.delete(ids.get(i));
 		}
 		return new MyResponse().success();
 	}

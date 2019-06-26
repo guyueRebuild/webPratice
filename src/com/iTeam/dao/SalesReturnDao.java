@@ -23,5 +23,34 @@ public interface SalesReturnDao {
 		public int update(SalesReturn sr);
 		
 		//根据编号进行删除
-		public void deleteBysNo(int sNo);
+		public int deleteBysNo(int sNo);
+		
+		
+		/**
+		 * 根据客户No删除
+		 * @param clientNo
+		 */
+		public int deleteByClientNo(int clientNo);
+		
+		/**
+		 * 根据客户编号进行批量删除
+		 * @param clientNos
+		 * @return
+		 */
+		public int deleteByClientNos(List<Integer> clientNos);
+		
+		/**
+		 * 根据编号进行批量删除
+		 * @param sNos
+		 * @return
+		 */
+		public int deleteBatch(List<Integer> sNos);
+		
+		public int deleteByGoodsNo(Integer goodsNo);
+		
+		public int deleteByGoodsNos(List<Integer> goodsNos);
+		
+		public int deleteByStorageNo(Integer storageNo);
+		
+		public int deleteByStorageNos(List<Integer> storageNos);
 }

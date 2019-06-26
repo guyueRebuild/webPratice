@@ -23,36 +23,62 @@ import com.iTeam.service.StockInService;
 public class StockInServiceImpl implements StockInService {
 
 	@Autowired
-	private StockInDao mapper;
+	private StockInDao stockInDao;
 
 	@Override
 	public List<StockIn> findAll(Map<String, Object> map) {	
-		return mapper.findAll(map);
+		return stockInDao.findAll(map);
 	}
 
 	@Override
 	public int getTotal(Map<String, Object> map) {
-		return mapper.getTotal(map);
+		return stockInDao.getTotal(map);
 	}
 
 	@Override
 	public int addStockIn(StockIn stockIn) {
-		return mapper.addStockIn(stockIn);
+		return stockInDao.addStockIn(stockIn);
 	}
 
 	@Override
 	public int updateStockIn(StockIn stockIn) {
-		return mapper.updateStockIn(stockIn);
+		return stockInDao.updateStockIn(stockIn);
 	}
 
 	@Override
 	public int deleteByStockInNo(int stockInNo) {
-		return mapper.deleteByStockInNo(stockInNo);
+		return stockInDao.deleteByStockInNo(stockInNo);
 	}
 
 	@Override
 	public int getStorageByStockInNo(int stockInNo) {
-		return mapper.getStorageByStockInNo(stockInNo);
+		return stockInDao.getStorageByStockInNo(stockInNo);
 	}
+
+	@Override
+	public int deleteByStockInNos(List<Integer> stockInNos) {
+		return stockInDao.deleteByStockInNos(stockInNos);
+	}
+	
+	@Override
+	public int deleteByGoodsNo(Integer goodsNo) {
+		return stockInDao.deleteByGoodsNo(goodsNo);
+	}
+
+	@Override
+	public int deleteByGoodsNos(List<Integer> goodsNos) {
+		return stockInDao.deleteByGoodsNos(goodsNos);
+	}
+
+	@Override
+	public int deleteByStorageNo(Integer storageNo) {
+		return stockInDao.deleteByStorageNo(storageNo);
+	}
+
+	@Override
+	public int deleteByStorageNos(List<Integer> storageNos) {
+		return stockInDao.deleteByStorageNos(storageNos);
+	}
+
 
 }

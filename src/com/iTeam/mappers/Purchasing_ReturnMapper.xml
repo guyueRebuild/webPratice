@@ -4,19 +4,23 @@
 <mapper namespace="com.iTeam.dao.Purchasing_ReturnDao">
 
 	<!-- 封装Purchasing_Return类的Map -->
-	<resultMap type="Purchasing_Return" id="Purchasing_ReturnResult">
-		<result property="prNo" column="prNo"/>
-		<result property="goodsNo" column="goodsNo"/>
-		<result property="prQuantity" column="prQuantity"/>
-		<result property="prPrice" column="prPrice"/>
-		<result property="prDate" column="prDate"/>
-		<result property="handler" column="handler"/>
-		<result property="prRemark" column="prRemark"/>
+	<resultMap type="Purchasing_Return"
+		id="Purchasing_ReturnResult">
+		<result property="prNo" column="prNo" />
+		<result property="goodsNo" column="goodsNo" />
+		<result property="prQuantity" column="prQuantity" />
+		<result property="prPrice" column="prPrice" />
+		<result property="prDate" column="prDate" />
+		<result property="handler" column="handler" />
+		<result property="prRemark" column="prRemark" />
 	</resultMap>
-	
+
 	<!-- 实现getPurchasing_ReturnList方法 -->
-	<select id="getPurchasing_ReturnList" resultType="Purchasing_Return" parameterType="Map">
-		select pr.*,g.goodsName,s.storageName from purchasing_return pr join goods g on g.goodsNo = pr.goodsNo inner join storage s on s.storageNo = pr.storageNo
+	<select id="getPurchasing_ReturnList"
+		resultType="Purchasing_Return" parameterType="Map">
+		select pr.*,g.goodsName,s.storageName from purchasing_return pr join
+		goods g on g.goodsNo = pr.goodsNo inner join storage s on s.storageNo
+		= pr.storageNo
 		<where>
 			<if test="goodsName != null and goodsName != ''">
 				and goodsName like #{goodsName}
@@ -26,7 +30,7 @@
 			limit #{start},#{size}
 		</if>
 	</select>
-	
+
 	<!-- 实现getTotal方法 -->
 	<select id="getTotal" resultType="Long">
 		select COUNT(*) from purchasing_return
@@ -36,12 +40,13 @@
 			</if>
 		</where>
 	</select>
-	
+
 	<!-- 实现add方法 -->
 	<insert id="add" parameterType="Purchasing_Return">
-		insert into purchasing_return values(null,#{goodsNo},#{prQuantity},#{prPrice},#{prDate},#{handler},#{prRemark},#{storageNo})
+		insert into purchasing_return
+		values(null,#{goodsNo},#{prQuantity},#{prPrice},#{prDate},#{handler},#{prRemark},#{storageNo})
 	</insert>
-	
+
 	<!-- 实现update方法 -->
 	<update id="update" parameterType="Purchasing_Return">
 		update purchasing_return
@@ -63,16 +68,53 @@
 			</if>
 			<if test="prRemark != null and prRemark != ''">
 				prRemark = #{prRemark},
-			</if>	
+			</if>
 			<if test="storageNo != null and storageNo != ''">
 				storageNo = #{storageNo},
-			</if>		
+			</if>
 		</set>
 		where prNo = #{prNo}
 	</update>
-	
+
 	<!-- 实现delete方法 -->
 	<delete id="delete" parameterType="Integer">
-		delete from purchasing_return where prNO = #{prNo}
+		delete from purchasing_return
+		where prNO = #{prNo}
+	</delete>
+
+	<delete id="deleteBatch" parameterType="list">
+		delete from purchasing_return where prNO in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- =========根据商品编号删除============== -->
+	<delete id="deleteByGoodsNo" parameterType="Integer">
+		DELETE FROM
+		purchasing_return WHERE goodsNo=#{goodsNo};
+	</delete>
+
+	<delete id="deleteByGoodsNos" parameterType="list">
+		delete from purchasing_return where goodsNo in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- =========根据仓库编号删除============== -->
+	<delete id="deleteByStorageNo" parameterType="Integer">
+		DELETE FROM
+		purchasing_return WHERE storageNo=#{storageNo};
+	</delete>
+
+	<delete id="deleteByStorageNos" parameterType="list">
+		delete from purchasing_return where storageNo in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
 	</delete>
 </mapper>

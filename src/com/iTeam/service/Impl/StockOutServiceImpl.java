@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.iTeam.dao.StockInDao;
 import com.iTeam.dao.StockOutDao;
 import com.iTeam.model.StockOut;
 import com.iTeam.service.StockOutService;
@@ -24,38 +23,61 @@ import com.iTeam.service.StockOutService;
 public class StockOutServiceImpl implements StockOutService {
 
 	@Autowired
-	private StockOutDao mapper;
+	private StockOutDao stockOutDao;
 
 	@Override
 	public List<StockOut> findAll(Map<String, Object> map) {
-		return mapper.findAll(map);
+		return stockOutDao.findAll(map);
 	}
 
 	@Override
 	public int getTotal(Map<String, Object> map) {
-		return mapper.getTotal(map);
+		return stockOutDao.getTotal(map);
 	}
 
 	@Override
 	public int addStockOut(StockOut stockOut) {
-		return mapper.addStockOut(stockOut);
+		return stockOutDao.addStockOut(stockOut);
 	}
 
 	@Override
 	public int updateStockOut(StockOut StockOut) {
-		return mapper.updateStockOut(StockOut);
+		return stockOutDao.updateStockOut(StockOut);
 	}
 
 	@Override
 	public int deleteByStockOutNo(int StockOutNo) {
-		return mapper.deleteByStockOutNo(StockOutNo);
+		return stockOutDao.deleteByStockOutNo(StockOutNo);
 	}
 
 	@Override
-	public int getStorageByStockInNo(int stockInNo) {
-		return mapper.getStorageByStockInNo(stockInNo);
+	public int getStorageByStockOutNo(int stockInNo) {
+		return stockOutDao.getStorageByStockOutNo(stockInNo);
 	}
 
-	
+	@Override
+	public int deleteByStockOutNos(List<Integer> stockOutNos) {
+		return stockOutDao.deleteBatch(stockOutNos);
+	}
+	@Override
+	public int deleteByGoodsNo(Integer goodsNo) {
+		return stockOutDao.deleteByGoodsNo(goodsNo);
+	}
+
+	@Override
+	public int deleteByGoodsNos(List<Integer> goodsNos) {
+		return stockOutDao.deleteByGoodsNos(goodsNos);
+	}
+
+	@Override
+	public int deleteByStorageNo(Integer storageNo) {
+		return stockOutDao.deleteByStorageNo(storageNo);
+	}
+
+	@Override
+	public int deleteByStorageNos(List<Integer> storageNos) {
+		return stockOutDao.deleteByStorageNos(storageNos);
+	}
+
 
 }

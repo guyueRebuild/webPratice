@@ -143,17 +143,14 @@ public class StockOutController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/stockOut", method = RequestMethod.DELETE, produces = PRODUCES)
-	public MyResponse deleteByStockOutNo(@RequestBody String ids) throws Exception {
-		String substring = ids.substring(1, ids.length()-1);
-		String[] idsStr = substring.split(",");
-		for (int i = 0; i < idsStr.length; i++) {
-			int storageNo = stockOutService.getStorageByStockInNo(Integer.parseInt(idsStr[i]));
-			stockOutService.deleteByStockOutNo(Integer.parseInt(idsStr[i]));
+	public MyResponse deleteByStockOutNo(@RequestBody List<Integer> ids) throws Exception {
+		for (int i = 0; i < ids.size(); i++) {
+			int storageNo = stockOutService.getStorageByStockOutNo(ids.get(i));
+			stockOutService.deleteByStockOutNo(ids.get(i));
 			// 更新该仓库当前容量
 			updateStorage(storageNo);
 		}
-		MyResponse response = new MyResponse();
-		return response.success();
+		return new MyResponse().success();
 	}
 
 	public void updateStorage(int storageNo) {

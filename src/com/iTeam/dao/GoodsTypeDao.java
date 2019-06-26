@@ -28,4 +28,10 @@ public interface GoodsTypeDao {
 	
 	//删除类别信息
 	public void delete(int typeNo);
+	
+	/**
+	 * 批量删除类别信息
+	 * @param typeNos
+	 */
+	public void deleteBatch(List<Integer> typeNos);
 }

@@ -31,4 +31,18 @@ public interface StockInService {
 	// 根据入库单号查询入库仓库
 	public int getStorageByStockInNo(int stockInNo);
 
+	/**
+	 * 批量删除入库信息
+	 * @param stockInNos
+	 * @return
+	 */
+	public int deleteByStockInNos(List<Integer> stockInNos);
+	
+	public int deleteByGoodsNo(Integer goodsNo);
+	
+	public int deleteByGoodsNos(List<Integer> goodsNos);
+	
+	public int deleteByStorageNo(Integer storageNo);
+	
+	public int deleteByStorageNos(List<Integer> storageNos);
 }

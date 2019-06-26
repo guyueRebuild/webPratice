@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.iTeam.exception.SqlRollbackException;
 import com.iTeam.exception.TokenException;
 import com.iTeam.exception.UserNotFoundException;
-import com.iTeam.response.MyError;
 import com.iTeam.response.MyResponse;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @ControllerAdvice   // 控制器增强
 @ResponseBody
@@ -95,10 +96,22 @@ public class ExceptionAspect {
 	 */
 	@ExceptionHandler(UserNotFoundException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public MyError userNotFound(UserNotFoundException e){
-		log.error("user Not found...");;
+	public MyResponse userNotFound(UserNotFoundException e){
+		log.error("user Not found...");
 		String username=e.getuserName();
-		return new MyError(4,"用户："+username+" 找不到");
+		return new MyResponse().failure("用户名："+username+"找不到");
+	}
+	
+	@ExceptionHandler(SqlRollbackException.class)
+	public MyResponse sqlRollBack(SqlRollbackException e) {
+		log.error("事务操作失败");
+		return new MyResponse().failure(e.getMessage());
+	}
+	
+	@ExceptionHandler(MySQLIntegrityConstraintViolationException.class)
+	public MyResponse MySQLIntegrityConstraintViolation(MySQLIntegrityConstraintViolationException e) {
+		log.error("插入或更新失败");
+		return new MyResponse().failure(e.getMessage());
 	}
 	
 }

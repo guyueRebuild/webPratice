@@ -57,4 +57,40 @@ public class SalesReturnServiceImpl implements SalesReturnService {
 
 	}
 
+	@Override
+	public int deleteBatchBysNos(List<Integer> sNos) {
+		return srDao.deleteBatch(sNos);
+	}
+
+	@Override
+	public int deleteByClientNo(int clientNo) {
+		return srDao.deleteByClientNo(clientNo);
+		
+	}
+
+	@Override
+	public int deleteByClientNos(List<Integer> clientNos) {
+		return srDao.deleteByClientNos(clientNos);
+	}
+
+	@Override
+	public int deleteByGoodsNo(Integer goodsNo) {
+		return srDao.deleteByGoodsNo(goodsNo);
+	}
+
+	@Override
+	public int deleteByGoodsNos(List<Integer> goodsNos) {
+		return srDao.deleteByGoodsNos(goodsNos);
+	}
+
+	@Override
+	public int deleteByStorageNo(Integer storageNo) {
+		return srDao.deleteByStorageNo(storageNo);
+	}
+
+	@Override
+	public int deleteByStorageNos(List<Integer> storageNos) {
+		return srDao.deleteByStorageNos(storageNos);
+	}
+
 }

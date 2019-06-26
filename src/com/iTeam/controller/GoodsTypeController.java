@@ -61,7 +61,7 @@ public class GoodsTypeController {
 			@RequestParam(value = "rows",required = false)String rows,
 			@RequestParam(value = "type",required = false)String goodsType) throws IOException {
 		PageBean pageBean = PageUtil.getDefaultPage(rows, page);
-		Map<String,Object> map = PageUtil.getMapFromPage(pageBean, "goodsType", goodsType);
+		Map<String,Object> map = PageUtil.getMapFromPage(pageBean, "type", goodsType);
 		Map<String,Object> resultData=new HashMap<String, Object>();
 		List<GoodsType> goodsTypelist = service.list(map);
 		Long total = service.getTotal(map);
@@ -90,7 +90,7 @@ public class GoodsTypeController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/goodsType",method = RequestMethod.POST,produces = PRODUCES)
-	public MyResponse addType(@RequestBody GoodsType goodsType) throws IOException {
+	public MyResponse addType(@RequestBody GoodsType goodsType) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		resultNum = service.add(goodsType);
@@ -109,7 +109,7 @@ public class GoodsTypeController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/goodsType",method = RequestMethod.PUT,produces = PRODUCES)
-	public MyResponse updateType(GoodsType goodsType) throws IOException {
+	public MyResponse updateType(@RequestBody GoodsType goodsType) throws Exception {
 		MyResponse response = new MyResponse();
 		int resltNum = 0;
 		resltNum = service.update(goodsType);
@@ -128,11 +128,9 @@ public class GoodsTypeController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/goodsType",method = RequestMethod.DELETE,produces = PRODUCES)
-	public MyResponse deleteType(@RequestBody String ids) throws IOException {
-		String substring = ids.substring(1, ids.length()-1);
-		String[] typeNo = substring.split(",");
-		for(int i = 0;i < typeNo.length;i++) {
-			service.delete(Integer.parseInt(typeNo[i]));
+	public MyResponse deleteType(@RequestBody List<Integer> ids) throws IOException {
+		for(int i = 0;i < ids.size();i++) {
+			service.delete(ids.get(i));
 		}
 		return new MyResponse().success();
 	}

@@ -42,4 +42,29 @@ public class PurchasingServiceImpl implements PurchasingService {
 		return purchasingDao.delete(id);
 	}
 
+	@Override
+	public int deleteBatch(List<Integer> ids) {
+		return purchasingDao.deleteBatch(ids);
+	}
+
+	@Override
+	public int deleteByGoodsNo(Integer goodsNo) {
+		return purchasingDao.deleteByGoodsNo(goodsNo);
+	}
+
+	@Override
+	public int deleteByGoodsNos(List<Integer> goodsNos) {
+		return purchasingDao.deleteByGoodsNos(goodsNos);
+	}
+
+	@Override
+	public int deleteByStorageNo(Integer storageNo) {
+		return purchasingDao.deleteByStorageNo(storageNo);
+	}
+
+	@Override
+	public int deleteByStorageNos(List<Integer> storageNos) {
+		return purchasingDao.deleteByStorageNos(storageNos);
+	}
+
 }

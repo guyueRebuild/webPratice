@@ -74,4 +74,12 @@
 		where storageNo=#{storageNo}
 	</update>
 	
+	<delete id="deleteBatch" parameterType="list">
+			delete from storage where storageNo in
+			<foreach item="item" index="index" collection="list"
+	      		open="(" separator="," close=")">
+	        #{item}
+	  		</foreach>
+	</delete>
+	  
 </mapper>

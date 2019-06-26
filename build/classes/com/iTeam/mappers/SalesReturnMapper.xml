@@ -46,4 +46,61 @@
   <delete id="deleteBysNo" parameterType="Integer">
       delete from sales_return where sNo=#{sNo}
   </delete>
+  
+  
+  
+  <!-- 根据客户No删除销售退货信息 -->
+  <delete id="deleteByClientNo" parameterType="Integer">
+ 	 DELETE FROM sales_return WHERE clientNo=#{clientNo};
+  </delete>
+  
+  <!-- 根据客户No批量删除销售退货信息 -->
+  <delete id="deleteByClientNos" parameterType="list">
+  	delete from sales_return where clientNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+  </delete> 
+  
+   <!-- 根据商品No删除销售退货信息 -->
+  <delete id="deleteByGoodsNo" parameterType="Integer">
+ 	 DELETE FROM sales_return WHERE goodsNo=#{goodsNo};
+  </delete>
+  
+  <!-- 根据商品No批量删除销售退货信息 -->
+  <delete id="deleteByGoodsNos" parameterType="list">
+  	delete from sales_return where goodsNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+  </delete> 
+  
+  
+   <!-- 根据仓库No删除销售退货信息 -->
+  <delete id="deleteByStorageNo" parameterType="Integer">
+ 	 DELETE FROM sales_return WHERE storageNo=#{storageNo};
+  </delete>
+  
+  <!-- 根据仓库No批量删除销售退货信息 -->
+  <delete id="deleteByStorageNos" parameterType="list">
+  	delete from sales_return where storageNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+  </delete> 
+  
+  
+  <delete id="deleteBatch" parameterType="list">
+		delete from sales_return where sNo in
+		<foreach item="item" index="index" collection="list"
+      		open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+  </delete>
+  
+  
+  
 </mapper>

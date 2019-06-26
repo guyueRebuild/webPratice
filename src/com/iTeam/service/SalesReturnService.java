@@ -26,4 +26,33 @@ public interface SalesReturnService {
 	
 	//根据编号进行删除
 	public void deleteBysNo(int sNo);
+	
+	/**
+	 * 根据编号进行批量删除
+	 * @param ids
+	 * @return
+	 */
+	public int deleteBatchBysNos(List<Integer> sNos);
+	
+	/**
+	 * 根据客户No删除
+	 * @param clientNo
+	 * @return 
+	 */
+	public int deleteByClientNo(int clientNo);
+	
+	/**
+	 * 根据客户编号进行批量删除
+	 * @param clientNos
+	 * @return
+	 */
+	public int deleteByClientNos(List<Integer> clientNos);
+	
+	public int deleteByGoodsNo(Integer goodsNo);
+	
+	public int deleteByGoodsNos(List<Integer> goodsNos);
+	
+	public int deleteByStorageNo(Integer storageNo);
+	
+	public int deleteByStorageNos(List<Integer> storageNos);
 }

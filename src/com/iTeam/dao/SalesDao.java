@@ -26,7 +26,36 @@ public interface SalesDao {
 	//根据编号进行删除
 	public void deleteBysNo(int sNo);
 	
+	/**
+	 * 根据客户No删除
+	 * @param clientNo
+	 */
+	public int deleteByClientNo(int clientNo);
+	
+	/**
+	 * 根据编号进行批量删除
+	 * @param sNos
+	 * @return
+	 */
+	public int deleteBatch(List<Integer> sNos);
+	
+	/**
+	 * 根据客户编号进行批量删除
+	 * @param clientNos
+	 * @return
+	 */
+	public int deleteByClientNos(List<Integer> clientNos);
+	
+	public int deleteByGoodsNo(Integer goodsNo);
+	
+	public int deleteByGoodsNos(List<Integer> goodsNos);
+	
+	public int deleteByStorageNo(Integer storageNo);
+	
+	public int deleteByStorageNos(List<Integer> storageNos);
+	
 	public List<Goods> getGoodsList(Object object);
 	
 	public List<Client> getClientList(Object object);
+	
 }

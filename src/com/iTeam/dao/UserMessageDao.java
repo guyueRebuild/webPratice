@@ -47,4 +47,11 @@ public interface UserMessageDao {
 	 * @return
 	 */
 	public int delete(Integer userNo);
+	
+	/**
+	 * 批量删除用户
+	 * @param userNo
+	 * @return 
+	 */
+	public int deleteBatch(List<Integer> userNos);
 }

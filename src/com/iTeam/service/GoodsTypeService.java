@@ -19,11 +19,17 @@ public interface GoodsTypeService {
 	public Long getTotal(Map<String,Object> map);
 	
 	//添加商品信息
-	public int add(GoodsType goodsType);
+	public int add(GoodsType goodsType) throws Exception;
 	
 	//修改商品信息
-	public int update(GoodsType goodsType);
+	public int update(GoodsType goodsType) throws  Exception;
 	
 	//删除类别信息
 	public void delete(int typeNo);
+	
+	/**
+	 * 批量删除类别信息
+	 * @param typeNos
+	 */
+	public void deleteBatch(List<Integer> typeNos);
 }

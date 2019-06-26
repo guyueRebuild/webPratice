@@ -112,11 +112,9 @@ public class Purchasing_ReturnController {
 	
 	//在浏览中通过URL调用deletePurchasing_Return这个方法		
 	@RequestMapping(value = "/purchasing_Return",method = RequestMethod.DELETE,produces = PRODUCES)
-	public MyResponse deletePurchasing_Return(@RequestBody String ids)throws Exception{
-		String substring = ids.substring(1, ids.length()-1);
-		String []idsStr=substring.split(",");
-		for(int i=0;i<idsStr.length;i++){
-			service.delete(Integer.parseInt(idsStr[i]));
+	public MyResponse deletePurchasing_Return(@RequestBody List<Integer> ids)throws Exception{
+		for(int i=0;i<ids.size();i++){
+			service.delete(ids.size());
 		}
 		return new MyResponse().success();
 	}

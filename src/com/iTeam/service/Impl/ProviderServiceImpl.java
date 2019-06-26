@@ -8,8 +8,12 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.iTeam.dao.ProviderDao;
+import com.iTeam.exception.SqlRollbackException;
 import com.iTeam.model.Provider;
+import com.iTeam.service.GoodsService;
 import com.iTeam.service.ProviderService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 
 /**
  * Service服务层实现类
@@ -24,6 +28,9 @@ public class ProviderServiceImpl implements ProviderService {
 	@Resource
 	private ProviderDao providerDao;
 	
+	@Resource
+	private GoodsService goodsService;
+	
 	@Override
 	public List<Provider> getProviderList(Map<String, Object> map) {
 		return providerDao.getProviderList(map);
@@ -35,19 +42,48 @@ public class ProviderServiceImpl implements ProviderService {
 	}
 
 	@Override
-	public int add(Provider provider) {
-		return providerDao.add(provider);
+	public int add(Provider provider) throws Exception {
+		try {
+			return providerDao.add(provider);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 	}
 
 	@Override
-	public int update(Provider provider) {
-		return providerDao.update(provider);
-		
+	public int update(Provider provider) throws Exception {
+		try {
+			return providerDao.update(provider);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("更新失败");
+		} 
 	}
 
 	@Override
 	public int delete(Integer id) {
-		return providerDao.delete(id);
+		try {
+			//对供应商类型有约束的表：商品，
+			//根据供应商编号删除对应商品
+			List<Integer> goodsNos = goodsService.getGoodsNoListByProviderNo(id);
+			goodsService.deleteBatch(goodsNos);
+			return providerDao.delete(id);
+		}catch(Exception e) {
+			throw new SqlRollbackException("出现异常，回滚");
+		}
 		
 	}
+
+	@Override
+	public int deleteBatch(List<Integer> ids) {
+		try {
+			//对供应商类型有约束的表：商品，
+			//根据供应商编号删除对应商品
+			List<Integer> goodsNos = goodsService.getGoodNoListByTypeNos(ids);
+			goodsService.deleteBatch(goodsNos);
+			return providerDao.deleteBatch(ids);
+		}catch(Exception e) {
+			throw new SqlRollbackException("出现异常，回滚");
+		}	
+	}
+
 }

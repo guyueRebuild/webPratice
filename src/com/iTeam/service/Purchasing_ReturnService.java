@@ -22,4 +22,18 @@ public interface Purchasing_ReturnService {
 	//根据采购编号删除采购退货信息
 	public int delete(Integer id);
 	
+	/**
+	 * 根据采购编号删除批量采购退货信息
+	 * @param ids
+	 * @return
+	 */
+	public int deleteBatch(List<Integer> ids);
+	
+	public int deleteByGoodsNo(Integer goodsNo);
+	
+	public int deleteByGoodsNos(List<Integer> goodsNos);
+	
+	public int deleteByStorageNo(Integer storageNo);
+	
+	public int deleteByStorageNos(List<Integer> storageNos);
 }
