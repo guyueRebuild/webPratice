@@ -104,9 +104,8 @@ public class ExceptionAspect {
 	}
 	
 	@ExceptionHandler(MySQLIntegrityConstraintViolationException.class)
-	public MyResponse MySQLIntegrityConstraintViolation(MySQLIntegrityConstraintViolationException e) {
+	public MyResponse mySQLIntegrityConstraintViolation(MySQLIntegrityConstraintViolationException e) {
 		log.error("插入或更新失败");
 		return new MyResponse().failure(e.getMessage());
 	}
-	
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iTeam.dao.EmployeeDao">
+	
+	<resultMap type="Employee" id="EmployeeResult">
+		<result property="empId" column="empId"/>
+		<result property="empName" column="empName"/>
+		<result property="empGender" column="empGender"/>
+		<result property="empPhone" column="empPhone"/>
+		<result property="empEmail" column="empEmail"/>
+		<result property="empDate" column="empDate"/>
+		<result property="deptId" column="deptId"/>
+		<result property="deptName" column="deptName"/>
+	</resultMap>
+	
+	<!-- 获取员工的信息 -->
+	<select id="getEmployeeList" parameterType="Map" resultMap="EmployeeResult">
+	    select e.*,d.deptName from employee as e left join department d ON e.deptId=d.deptId
+	    <where>
+	    	<if test="empName != null and empName != ''">
+	    		and empName like #{empName}
+	    	</if>
+	    </where>
+	    <if test="start != null and size != null">
+	    	limit #{start},#{size}
+	    </if>
+	</select>
+	
+	<!-- 根据部门编号查询员工信息-->
+	<select id="getEmployeeListByDeptId" parameterType="Map" resultMap="EmployeeResult">
+	    select e.*,d.deptName from employee as e left join department d ON e.deptId=d.deptId
+	    where e.deptId=#{deptId} order by empId
+	    <if test="start != null and size != null">
+	    	limit #{start},#{size}
+	    </if>
+	</select>
+	<!--获取用户的总记录数 -->
+	<select id="getTotalEmployee" resultType="Long">
+	    select count(*) from employee
+	</select>
+	<!--添加用户 -->
+	<insert id="addEmployee" parameterType="Employee">
+	    insert into employee values(default,#{empName},#{empGender},#{empPhone},#{empEmail},#{empDate},#{empId})
+	</insert>
+	<!-- 修改用户 -->
+	<update id="updateEmployee" parameterType="Employee">
+	    update employee
+	    <set>
+	        <if test="empName!=null and empName!=''">
+	            empName=#{empName},
+	        </if>
+	        <if test="empGender!=null and empGender!=''">
+	            empGender=#{empGender},
+	        </if>
+	        <if test="empPhone!=null and empPhone!=''">
+	            empPhone=#{empPhone},
+	        </if>
+	        <if test="empEmail!=null and empEmail!=''">
+	            empEmail=#{empEmail},
+	        </if>
+	        <if test="empDate!=null">
+	            empDate=#{empDate},
+	        </if>
+	        <if test="deptId!=null">
+	            deptId=#{deptId},
+	        </if>
+	    </set>
+	    where empId = #{empId}
+	</update>
+	<!-- 根据部门编号设置员工部门编码编号为未分配 -->
+	<update id="updateDeptIdToDefaultByDeptIds" parameterType="list">
+		 update employee set deptId=10000
+		 where deptId in
+		 <foreach item="item" index="index" collection="list"
+	      		open="(" separator="," close=")">
+	        #{item}
+	  		</foreach>
+	</update>
+	<!-- 删除用户 -->
+	<delete id="deleteEmployee" parameterType="Integer">
+	    delete from employee where empId=#{empId}
+	</delete>
+	
+	<delete id="deleteEmployeeBatch" parameterType="list">
+			delete from employee where empId in
+			<foreach item="item" index="index" collection="list"
+	      		open="(" separator="," close=")">
+	        #{item}
+	  		</foreach>
+	</delete>
+</mapper>

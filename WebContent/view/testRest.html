@@ -65,7 +65,7 @@
 				},
 			}); 
 		/* 	 */
-		  $.ajax({
+		 /*  $.ajax({
 			  url: 'http://localhost:8080/JXCMS2/inventorySearch',
 			  type: 'get',
 			  data:{
@@ -78,8 +78,8 @@
 					console.log(res)
 				},
 			});  
-		
-		  $.ajax({
+		 */
+		 /*  $.ajax({
 			  url: 'http://localhost:8080/JXCMS2/stockIns',
 			  type: 'get',
 			 
@@ -87,11 +87,11 @@
 			  success: function(res) {
 					console.log(res)
 				},
-			});   
+			});   */ 
 		
 		  
 		
-			var user={userName:'管理员',password:'123'};	
+			/* var user={userName:'管理员',password:'123'};	
 			var userStr=JSON.stringify(user);
 			$.ajax({
 				url: 'http://localhost:8080/JXCMS2/login',
@@ -108,13 +108,13 @@
 					console.log(err)
 					}
 				
-			})   
-		    $.ajax({
+			})  */  
+		   /*  $.ajax({
 			  url: 'http://localhost:8080/JXCMS2/logout',
 			  success: function(res) {
 					console.log(res)
 				},
-			});    
+			});   */  
 		/*  var ids=[10014];
 		 var ids=JSON.stringify(ids);
 		 $.ajax({
@@ -127,7 +127,7 @@
 				},
 			});   */
 			
-	/* 		var goodsType={type:"HHH"};
+	 		/* var goodsType={type:"HHH"};
 			var type=JSON.stringify(goodsType);
 			 $.ajax({
 				  url: 'http://localhost:8080/JXCMS2/goodsType',
@@ -137,9 +137,9 @@
 				  success: function(res) {
 						console.log(res)
 					},
-				}); */
+				});  */
 			 
-				/*  var goodsType={typeNo:10016,type:"HHHX"};
+				/* var goodsType={typeNo:10016,type:"HHHX"};
 				var type=JSON.stringify(goodsType);
 				 $.ajax({
 					  url: 'http://localhost:8080/JXCMS2/goodsType',
@@ -150,7 +150,96 @@
 							console.log(res)
 						},
 					});   */
+				/*  var ids=[10002];
+				 var ids=JSON.stringify(ids);
+				 $.ajax({
+					  url: 'http://localhost:8080/JXCMS2/purchasing_Return',
+					  type: 'delete',
+					  data:ids,
+					  contentType: "application/json;charset=UTF-8",
+					  success: function(res) {
+							console.log(res)
+						},
+					}); */  
 					
+					/*  $.ajax({
+						  url: 'http://localhost:8080/JXCMS2/employees',
+						  type: 'get',
+						  contentType: "application/json;charset=UTF-8",
+						  success: function(res) {
+								console.log(res)
+							},
+						}); */
+			/* var emp={empName:"李白",empDate:new Date(),empPhone:"15897548161",deptId:10004};
+			var empdata=JSON.stringify(emp);
+			 $.ajax({
+				  url: 'http://localhost:8080/JXCMS2/employee',
+				  type: 'post',
+				  data:empdata,
+				  contentType: "application/json;charset=UTF-8",
+				  success: function(res) {
+						console.log(res)
+					},
+				}); */
+				
+		/* 		var emp={empId:10017,empName:"李白",empDate:new Date(),empPhone:"15897548161",deptId:10003};
+				var empdata=JSON.stringify(emp);
+				 $.ajax({
+					  url: 'http://localhost:8080/JXCMS2/employee',
+					  type: 'put',
+					  data:empdata,
+					  contentType: "application/json;charset=UTF-8",
+					  success: function(res) {
+							console.log(res)
+						},
+					}); */
+				 	
+					/* var ids=[10017];
+					var idsJSON=JSON.stringify(ids);
+					 $.ajax({
+						  url: 'http://localhost:8080/JXCMS2/employee',
+						  type: 'delete',
+						  data:idsJSON,
+						  contentType: "application/json;charset=UTF-8",
+						  success: function(res) {
+								console.log(res)
+							},
+						}); */
+					/* var deptId={deptId:10000};
+					var jsonId=JSON.stringify(deptId);
+					  $.ajax({
+						  url: 'http://localhost:8080/JXCMS2/department/employees',
+						  type: 'get',
+						  data: deptId,
+						  contentType: "application/json;charset=UTF-8",
+						  success: function(res) {
+								console.log(res)
+							},
+						}); 
+						 */
+					/* var dept={deptId:10005,deptName:"李白部",deptManagerId:"10015"};
+					var deptdata=JSON.stringify(dept);
+					 $.ajax({
+						  url: 'http://localhost:8080/JXCMS2/department',
+						  type: 'put',
+						  data:deptdata,
+						  contentType: "application/json;charset=UTF-8",
+						  success: function(res) {
+								console.log(res)
+							},
+						}); */
+						var ids=[10005];
+						var idsJson=JSON.stringify(ids);
+						$.ajax({
+							  url: 'http://localhost:8080/JXCMS2/department',
+							  type: 'delete',
+							  data:idsJson,
+							  contentType: "application/json;charset=UTF-8",
+							  success: function(res) {
+									console.log(res)
+								},
+							});
+					 
 				/* 	var puc={goodsNo:10001,storageNo:10001,dateIn:new Date()};
 					var puc=JSON.stringify(puc);
 					 $.ajax({

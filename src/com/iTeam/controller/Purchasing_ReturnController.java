@@ -113,8 +113,10 @@ public class Purchasing_ReturnController {
 	//在浏览中通过URL调用deletePurchasing_Return这个方法		
 	@RequestMapping(value = "/purchasing_Return",method = RequestMethod.DELETE,produces = PRODUCES)
 	public MyResponse deletePurchasing_Return(@RequestBody List<Integer> ids)throws Exception{
+		if(ids.isEmpty())
+			return new MyResponse().failure("要删除的数目为零");
 		for(int i=0;i<ids.size();i++){
-			service.delete(ids.size());
+			service.delete(ids.get(i));
 		}
 		return new MyResponse().success();
 	}

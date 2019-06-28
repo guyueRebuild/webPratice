@@ -118,6 +118,8 @@ public class ProviderController {
 	 */
 	@RequestMapping(value = "/provider",method = RequestMethod.DELETE,produces = PRODUCES)
 	public MyResponse deleteProvider(@RequestBody List<Integer> ids)throws Exception{
+		if(ids.isEmpty())
+			return new MyResponse().failure("要删除的数目为零");
 		for(int i=0;i<ids.size();i++){
 			service.delete(ids.get(i));
 		}

@@ -62,7 +62,7 @@ public class PageUtil {
 	
 	public static Map<String,Object> getMapFromPage(PageBean pageBean,String key,int patternId) {
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("key", patternId);
+		map.put(key, patternId);
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		return map;

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iTeam.dao.DepartmentDao">
+	
+	<resultMap type="Department" id="DepartmentResult">
+		<result property="deptId" column="deptId"/>
+		<result property="deptName" column="deptName"/>
+		<result property="deptManagerId" column="deptManagerId"/>
+		<result property="deptManagerName" column="deptManagerName"/>
+	</resultMap>
+	
+	<!-- 获取部门的信息 -->
+	<select id="getDepartmentList" parameterType="Map" resultMap="DepartmentResult">
+	    SELECT d.*,e.empName AS deptManagerName 
+		FROM department d LEFT JOIN employee e 
+		ON d.deptManagerId=e.empId ORDER BY d.deptId
+	    <where>
+	    	<if test="deptName != null and deptName != ''">
+	    		and deptName like #{deptName}
+	    	</if>
+	    </where>
+	    <if test="start != null and size != null">
+	    	limit #{start},#{size}
+	    </if>
+	</select>
+	
+	
+	<!-- 获取部门总记录数 -->
+	<select id="getTotalDepartment" resultType="Long">
+	    select count(*) from Department
+	</select>
+	<!-- 添加部门 -->
+	<insert id="addDepartment" parameterType="Department">
+	    insert into department values(default,#{deptName},#{deptManagerId})
+	</insert>
+	<!-- ===========修改部门================ -->
+	<update id="updateDepartment" parameterType="Department">
+	    update department
+	    <set>
+	        <if test="deptName!=null and deptName!=''">
+	            deptName=#{deptName},
+	        </if>
+	        <if test="deptManagerId!=null">
+	            deptManagerId=#{deptManagerId},
+	        </if>
+	    </set>
+	    where deptId = #{deptId}
+	</update>
+	
+	 <!-- 根据员工编号设置经理值为空 -->
+	 <update id="updateManagerIdToNull" parameterType="int">
+	    update department set deptManagerId=null
+	    where deptManagerId = #{empId}
+	</update>
+	  <!-- 根据员工编号设置经理值为空 -->
+	  <update id="updateManagerIdsToNull" parameterType="list">
+	    update department set deptManagerId=null
+	    where deptManagerId in
+	    <foreach collection="list" index="index" item="item"
+	    open="(" separator="," close=")">
+	     #{item}
+	    </foreach>
+	</update>
+	 
+	<!-- 删除部门 -->
+	<delete id="deleteDepartment" parameterType="Integer">
+	    delete from department where deptId=#{deptId}
+	</delete>
+	
+	<delete id="deleteDepartmentBatch" parameterType="list">
+			delete from department where deptId in
+			<foreach item="item" index="index" collection="list"
+	      		open="(" separator="," close=")">
+	        #{item}
+	  		</foreach>
+	</delete>
+</mapper>

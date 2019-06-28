@@ -115,6 +115,8 @@ public class GoodsController {
 	 */
 	@RequestMapping(value = "/goods",method = RequestMethod.DELETE,produces = PRODUCES)
 	public MyResponse deleteGoods(@RequestBody List<Integer> ids) throws IOException {
+		if(ids.isEmpty())
+			return new MyResponse().failure("要删除的数目为零");
 		for(int i = 0;i < ids.size();i++) {
 			service.delete(ids.get(i));
 		}

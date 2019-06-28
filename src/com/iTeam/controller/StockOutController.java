@@ -144,6 +144,8 @@ public class StockOutController {
 	 */
 	@RequestMapping(value = "/stockOut", method = RequestMethod.DELETE, produces = PRODUCES)
 	public MyResponse deleteByStockOutNo(@RequestBody List<Integer> ids) throws Exception {
+		if(ids.isEmpty())
+			return new MyResponse().failure("要删除的数目为零");
 		for (int i = 0; i < ids.size(); i++) {
 			int storageNo = stockOutService.getStorageByStockOutNo(ids.get(i));
 			stockOutService.deleteByStockOutNo(ids.get(i));

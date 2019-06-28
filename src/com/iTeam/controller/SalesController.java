@@ -122,6 +122,8 @@ public class SalesController {
 	
 	@RequestMapping(value = "/sales",method = RequestMethod.DELETE,produces = PRODUCES)
 	public MyResponse deleteSales(@RequestBody List<Integer> ids){
+		if(ids.isEmpty())
+			return new MyResponse().failure("要删除的数目为零");
 		for(int i = 0;i < ids.size();i++) {
 			service.deleteBysNo(ids.get(i));
 		}

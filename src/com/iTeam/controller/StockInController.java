@@ -140,6 +140,8 @@ public class StockInController {
 	 */
 	@RequestMapping(value = "/stockIn", method = RequestMethod.DELETE, produces = PRODUCES)
 	public MyResponse deleteByStockInNo(@RequestBody List<Integer> ids) throws Exception {
+		if(ids.isEmpty())
+			return new MyResponse().failure("要删除的数目为零");
 		for (int i = 0; i < ids.size(); i++) {
 			int storageNo = service.getStorageByStockInNo(ids.get(i));
 			service.deleteByStockInNo(ids.get(i));

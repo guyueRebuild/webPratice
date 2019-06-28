@@ -105,6 +105,9 @@ public class StorageServiceImpl implements StorageService {
 
 	@Override
 	public int deleteBatch(List<Integer> ids) {
+		if(ids.isEmpty()) {
+			return 0;
+		}
 		try {
 			// 对仓库有约束的表：销售，采购，进出库
 			//根据仓库编号删除销售信息

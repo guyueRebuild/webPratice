@@ -113,10 +113,12 @@ public class ClientController {
 	 */
 	@RequestMapping(value = "/client", method = RequestMethod.DELETE, produces = PRODUCES)
 	public MyResponse deleteClient(@RequestBody List<Integer> ids) throws Exception {
+		if(ids.isEmpty())
+			return new MyResponse().failure("要删除的数目为零");
 		for (int i = 0; i < ids.size(); i++) {
 			System.out.println(ids.get(i));
 			service.delete(ids.get(i));
 		}
-		return new MyResponse().success(ids);
+		return new MyResponse().success();
 	}
 }
