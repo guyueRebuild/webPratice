@@ -8,10 +8,12 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.iTeam.dao.EmployeeDao;
+import com.iTeam.exception.DuplicationException;
 import com.iTeam.exception.SqlRollbackException;
 import com.iTeam.model.Employee;
 import com.iTeam.service.DepartmentService;
 import com.iTeam.service.EmployeeService;
+import com.iTeam.util.StringUtil;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @Service("EmployeeService")
@@ -35,8 +37,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int addEmployee(Employee employee) throws Exception {
+		if(StringUtil.isEmpty(employee.getEmpPhone())&&employeeDao.getEmpPhone(employee.getEmpPhone())!=0) {
+			throw new DuplicationException("该手机号码已经被占用");
+		}
 		try {
-			departmentService.updateManagerIdToNull(employee.getEmpId());
 			return employeeDao.addEmployee(employee);
 		}catch(Exception e) {
 			throw new MySQLIntegrityConstraintViolationException("插入失败");
@@ -45,6 +49,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int updateEmployee(Employee employee) throws Exception {
+		if(StringUtil.isEmpty(employee.getEmpPhone())&&employeeDao.getEmpPhone(employee.getEmpPhone())!=0) {
+			throw new DuplicationException("该手机号码已经被占用");
+		}
 		//如果该员工是部门经理,把部门表中的经理编号字段设置为空
 		try {
 			departmentService.updateManagerIdToNull(employee.getEmpId());
@@ -88,4 +95,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeDao.updateDeptIdToDefaultByDeptIds(deptIds);
 	}
 
+	
+	
+	public int getEmpPhone(String empPhone) {
+		return employeeDao.getEmpPhone(empPhone);
+	}
 }

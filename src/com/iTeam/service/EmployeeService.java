@@ -22,4 +22,11 @@ public interface EmployeeService {
 	public int deleteEmployee(int empId);
 	
 	public int deleteEmployeeBatch(List<Integer> empIds);
+	
+	/**
+	 * 查询是否有对应的号码
+	 * @param empPhone
+	 * @return
+	 */
+	public int getEmpPhone(String empPhone);
 }

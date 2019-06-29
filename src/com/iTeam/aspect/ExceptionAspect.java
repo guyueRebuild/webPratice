@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.iTeam.exception.DuplicationException;
 import com.iTeam.exception.SqlRollbackException;
 import com.iTeam.exception.TokenException;
 import com.iTeam.exception.UserNotFoundException;
@@ -105,5 +106,11 @@ public class ExceptionAspect {
 	public MyResponse mySQLIntegrityConstraintViolation(MySQLIntegrityConstraintViolationException e) {
 		log.error("插入或更新失败");
 		return new MyResponse().failure(e.getMessage());
+	}
+	
+	@ExceptionHandler(DuplicationException.class)
+	public MyResponse handleDuplicationMessgage(DuplicationException e) {
+		log.error("唯一性信息不允许重复添加");
+		return new MyResponse().failure("唯一性信息不允许重复添加");
 	}
 }
