@@ -21,10 +21,10 @@ public interface StockOutService {
 	public int getTotal(Map<String, Object> map);
 
 	// 添加出库信息
-	public int addStockOut(StockOut stockOut);
+	public int addStockOut(StockOut stockOut) throws Exception;
 
 	// 修改出库信息
-	public int updateStockOut(StockOut stockOut);
+	public int updateStockOut(StockOut stockOut) throws Exception;
 
 	// 删除出库信息
 	public int deleteByStockOutNo(int stockOutNo);

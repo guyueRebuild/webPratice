@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.iTeam.dao.StockOutDao;
 import com.iTeam.model.StockOut;
 import com.iTeam.service.StockOutService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 /**
  * 实现出库业务逻辑层和调用mapper层进行数据操作
@@ -36,13 +37,23 @@ public class StockOutServiceImpl implements StockOutService {
 	}
 
 	@Override
-	public int addStockOut(StockOut stockOut) {
-		return stockOutDao.addStockOut(stockOut);
+	public int addStockOut(StockOut stockOut) throws Exception {
+		try {
+			return stockOutDao.addStockOut(stockOut);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
+
 	}
 
 	@Override
-	public int updateStockOut(StockOut StockOut) {
-		return stockOutDao.updateStockOut(StockOut);
+	public int updateStockOut(StockOut StockOut) throws Exception {
+		try {
+			return stockOutDao.updateStockOut(StockOut);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("更新失败");
+		}
+
 	}
 
 	@Override

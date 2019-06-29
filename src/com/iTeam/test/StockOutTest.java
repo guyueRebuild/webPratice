@@ -34,14 +34,14 @@ public class StockOutTest {
 	}
 
 	// @Test
-	public void addStockOutTest() {
+	public void addStockOutTest() throws Exception {
 		Date date = new Date();
 		StockOut stockOut = new StockOut(0, 10001, 10001, 200, date, "999", "123");
 		service.addStockOut(stockOut);
 	}
 
 	// @Test
-	public void updateStockOutTest() {
+	public void updateStockOutTest() throws Exception {
 		Date date = new Date();
 		StockOut stockOut = new StockOut(10002, 10001, 10001, 200, date, "999", "1245");
 		service.updateStockOut(stockOut);

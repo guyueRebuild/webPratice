@@ -12,6 +12,7 @@ import com.iTeam.exception.SqlRollbackException;
 import com.iTeam.model.Employee;
 import com.iTeam.service.DepartmentService;
 import com.iTeam.service.EmployeeService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @Service("EmployeeService")
 public class EmployeeServiceImpl implements EmployeeService {
@@ -33,18 +34,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public int addEmployee(Employee employee) {
-		return employeeDao.addEmployee(employee);
+	public int addEmployee(Employee employee) throws Exception {
+		try {
+			departmentService.updateManagerIdToNull(employee.getEmpId());
+			return employeeDao.addEmployee(employee);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 	}
 
 	@Override
-	public int updateEmployee(Employee employee) {
+	public int updateEmployee(Employee employee) throws Exception {
 		//如果该员工是部门经理,把部门表中的经理编号字段设置为空
 		try {
 			departmentService.updateManagerIdToNull(employee.getEmpId());
 			return employeeDao.updateEmployee(employee);
 		}catch(Exception e) {
-			throw new SqlRollbackException();
+			throw new MySQLIntegrityConstraintViolationException("更新失败");
 		}
 	}
 

@@ -11,9 +11,9 @@ public interface DepartmentService {
 	
 	public long getTotalDepartment();
 	
-	public int addDepartment(Department department);
+	public int addDepartment(Department department) throws Exception;
 	
-	public int updateDepartment(Department department);
+	public int updateDepartment(Department department) throws Exception;
 	
 	public int deleteDepartment(int deptId);
 	

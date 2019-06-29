@@ -13,9 +13,9 @@ public interface EmployeeService {
 	
 	public long getTotalEmployee();
 	
-	public int addEmployee(Employee employee);
+	public int addEmployee(Employee employee) throws Exception;
 	
-	public int updateEmployee(Employee employee);
+	public int updateEmployee(Employee employee) throws Exception;
 	
 	public int updateDeptIdToDefaultByDeptIds(List<Integer> deptIds);
 	

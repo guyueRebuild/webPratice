@@ -50,7 +50,7 @@ public class StockInServiceImpl implements StockInService {
 		try {
 			return stockInDao.updateStockIn(stockIn);
 		}catch(Exception e) {
-			throw new MySQLIntegrityConstraintViolationException("插入失败");
+			throw new MySQLIntegrityConstraintViolationException("更新失败");
 		}
 	}
 

@@ -42,8 +42,8 @@
 			</list>
 		</property>
 	</bean>
-	
-	<!-- 视图解析器 -->
+<!-- 	
+	视图解析器
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/pages/" />
@@ -54,6 +54,6 @@
 	<mvc:resources location="/js/" mapping="/js**"/>
 	<mvc:resources location="/css/" mapping="/css**"/>
 	<mvc:resources location="/jquery-easyui-1.3.3/" mapping="/jquery-easyui-1.3.3/**"/>
-	<mvc:resources location="/view/" mapping="/view/**"/>
+	<mvc:resources location="/view/" mapping="/view/**"/> -->
 
 </beans>  

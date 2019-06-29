@@ -13,6 +13,7 @@ import com.iTeam.exception.SqlRollbackException;
 import com.iTeam.model.Department;
 import com.iTeam.service.DepartmentService;
 import com.iTeam.service.EmployeeService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @Service("DepartmentService")
 public class DepartmentServiceImpl implements DepartmentService {
@@ -33,13 +34,21 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public int addDepartment(Department department) {
-		return departmentDao.addDepartment(department);
+	public int addDepartment(Department department) throws Exception {
+		try {
+			return departmentDao.addDepartment(department);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("插入失败");
+		}
 	}
 
 	@Override
-	public int updateDepartment(Department department) {
-		return departmentDao.updateDepartment(department);
+	public int updateDepartment(Department department) throws Exception {
+		try {
+			return departmentDao.updateDepartment(department);
+		}catch(Exception e) {
+			throw new MySQLIntegrityConstraintViolationException("更新失败");
+		}
 	}
 
 	@Override

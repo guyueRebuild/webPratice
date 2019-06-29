@@ -82,10 +82,10 @@ public class StockOutController {
 	 * 添加出库信息
 	 * 
 	 * @param stockOut
-	 * @throws IOException
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/stockOut", method = RequestMethod.POST, produces = PRODUCES)
-	public MyResponse addStockOut(@RequestBody StockOut stockOut) throws IOException {
+	public MyResponse addStockOut(@RequestBody StockOut stockOut) throws Exception {
 		MyResponse response = new MyResponse();
 		int resultNum = 0;
 		// 增加出库单
@@ -104,11 +104,11 @@ public class StockOutController {
 	 * 修改出库信息
 	 * 
 	 * @param stockOut
-	 * @throws IOException
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/stockOut/{storageNoBefore}", method = RequestMethod.PUT, produces = PRODUCES)
 	public MyResponse updateStockOut(@RequestBody StockOut stockOut,
-			@PathVariable("storageNoBefore") String storageNoBefore) throws IOException {
+			@PathVariable("storageNoBefore") String storageNoBefore) throws Exception {
 		MyResponse response = new MyResponse();
 		// 修改前出库仓库编号
 		int forward = Integer.parseInt(storageNoBefore);
