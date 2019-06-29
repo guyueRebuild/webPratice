@@ -14,12 +14,13 @@
 	<select id="getDepartmentList" parameterType="Map" resultMap="DepartmentResult">
 	    SELECT d.*,e.empName AS deptManagerName 
 		FROM department d LEFT JOIN employee e 
-		ON d.deptManagerId=e.empId ORDER BY d.deptId
+		ON d.deptManagerId=e.empId 
 	    <where>
 	    	<if test="deptName != null and deptName != ''">
 	    		and deptName like #{deptName}
 	    	</if>
 	    </where>
+	    ORDER BY d.deptId
 	    <if test="start != null and size != null">
 	    	limit #{start},#{size}
 	    </if>

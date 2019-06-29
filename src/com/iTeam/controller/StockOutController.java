@@ -31,9 +31,6 @@ import net.sf.json.JSONArray;
 
 /**
  * 出库信息控制层
- * 
- * @author 谭昌敏
- *
  */
 
 @RestController
@@ -47,9 +44,9 @@ public class StockOutController {
 
 	@Autowired
 	private StorageService storageService;
-	
+
 	private final String PRODUCES = "application/json";
-	
+
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -66,13 +63,13 @@ public class StockOutController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/stockOuts", method = RequestMethod.GET)
-	public MyResponse list(@RequestParam(value = "page",required = false) String page,
-			@RequestParam(value = "rows",required = false)String rows,
-			@RequestParam(value = "handler",required = false) String handler) throws IOException {
+	public MyResponse list(@RequestParam(value = "page", required = false) String page,
+			@RequestParam(value = "rows", required = false) String rows,
+			@RequestParam(value = "handler", required = false) String handler) throws IOException {
 		PageBean pageBean = PageUtil.getDefaultPage(rows, page);
 		Map<String, Object> map = PageUtil.getMapFromPage(pageBean, "handler", handler);
 		MyResponse response = new MyResponse();
-		Map<String,Object> resultData=new HashMap<String, Object>();		
+		Map<String, Object> resultData = new HashMap<String, Object>();
 		List<StockOut> stockOutsList = stockOutService.findAll(map);
 		int total = stockOutService.getTotal(map);
 		JSONArray jsonArray = PageUtil.ProcessDataJsonValue(java.util.Date.class, stockOutsList, "yyyy-MM-dd HH:mm:ss");
@@ -144,10 +141,10 @@ public class StockOutController {
 	 */
 	@RequestMapping(value = "/stockOut", method = RequestMethod.DELETE, produces = PRODUCES)
 	public MyResponse deleteByStockOutNo(@RequestBody List<Integer> ids) throws Exception {
-		if(ids.isEmpty())
+		if (ids.isEmpty())
 			return new MyResponse().failure("要删除的数目为零");
 		for (int i = 0; i < ids.size(); i++) {
-			int storageNo = stockOutService.getStorageByStockOutNo(ids.get(i));
+			Integer storageNo = stockOutService.getStorageByStockOutNo(ids.get(i));
 			stockOutService.deleteByStockOutNo(ids.get(i));
 			// 更新该仓库当前容量
 			updateStorage(storageNo);
@@ -155,7 +152,15 @@ public class StockOutController {
 		return new MyResponse().success();
 	}
 
-	public void updateStorage(int storageNo) {
+	/**
+	 * 更新仓库信息
+	 * 
+	 * @param storageNo
+	 */
+	public void updateStorage(Integer storageNo) {
+		if (storageNo == null) {
+			return;
+		}
 		int in = inventoryService.getStorageInInventory(storageNo);
 		int out = inventoryService.getStorageOutInventory(storageNo);
 		Storage storage = new Storage();

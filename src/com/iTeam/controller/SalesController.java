@@ -93,6 +93,12 @@ public class SalesController {
 	}
 	
 	
+	/**
+	 * 提交销售信息
+	 * @param sales
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/sales",method = RequestMethod.POST,produces = PRODUCES)
 	public MyResponse addSales(@RequestBody Sales sales) throws Exception {
 		MyResponse response = new MyResponse();
@@ -106,6 +112,12 @@ public class SalesController {
 		return response;
 	}
 	
+	/**
+	 * 修改销售信息
+	 * @param sales
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/sales",method = RequestMethod.PUT,produces = PRODUCES)
 	public MyResponse updateSales(@RequestBody Sales sales) throws Exception{
 		MyResponse response = new MyResponse();
@@ -120,13 +132,19 @@ public class SalesController {
 		return response;
 	}
 	
+	/**
+	 * 删除销售信息
+	 * @param ids
+	 * @return
+	 */
 	@RequestMapping(value = "/sales",method = RequestMethod.DELETE,produces = PRODUCES)
 	public MyResponse deleteSales(@RequestBody List<Integer> ids){
 		if(ids.isEmpty())
 			return new MyResponse().failure("要删除的数目为零");
-		for(int i = 0;i < ids.size();i++) {
-			service.deleteBysNo(ids.get(i));
-		}
+//		for(int i = 0;i < ids.size();i++) {
+//			service.deleteBysNo(ids.get(i));
+//		}
+		service.deleteBatchBysNos(ids);
 		return new MyResponse().success();
 	}
 

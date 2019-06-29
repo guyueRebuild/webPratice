@@ -81,7 +81,6 @@ public class GoodsServiceImpl implements GoodsService {
 			stockInService.deleteByGoodsNo(goodsNo);
 			stockOutService.deleteByGoodsNo(goodsNo);
 			goodsDao.delete(goodsNo);
-			goodsDao.getGoodsNoListByTypeNo(10010);
 		}catch(Exception e) {
 			throw new SqlRollbackException("出现异常，回滚");
 		}
@@ -97,13 +96,14 @@ public class GoodsServiceImpl implements GoodsService {
 			//对商品有约束的表：销售，采购，进出库
 			//TODO:根据商品编号删除销售信息，销售退货信息
 			salesService.deleteByGoodsNos(goodsNos);
-			salesReturnService.deleteByStorageNos(goodsNos);
+			salesReturnService.deleteByGoodsNos(goodsNos);
 			//TODO:根据商品编号销售表删除采购及采购回退信息
 			purchasingService.deleteByGoodsNos(goodsNos);
 			purchasing_ReturnService.deleteByGoodsNos(goodsNos);
 			//TODO:根据商品编号删除商品出入库信息
 			stockInService.deleteByGoodsNos(goodsNos);
 			stockOutService.deleteByGoodsNos(goodsNos);
+			goodsDao.deleteBatch(goodsNos);
 		}catch(Exception e) {
 			throw new SqlRollbackException("出现异常，回滚");
 		}

@@ -51,7 +51,7 @@ public class StockOutServiceImpl implements StockOutService {
 	}
 
 	@Override
-	public int getStorageByStockOutNo(int stockInNo) {
+	public Integer getStorageByStockOutNo(int stockInNo) {
 		return stockOutDao.getStorageByStockOutNo(stockInNo);
 	}
 

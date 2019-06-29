@@ -7,7 +7,6 @@ import com.iTeam.model.Storage;
 
 /**
  * 供应商信息DAO层
- * @author LMH
  *
  */
 

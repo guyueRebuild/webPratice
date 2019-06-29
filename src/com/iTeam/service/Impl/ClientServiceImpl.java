@@ -85,7 +85,7 @@ public class ClientServiceImpl implements ClientService {
 		int result = 0;
 		try {
 			salesService.deleteByClientNos(ids);
-			salesService.deleteByClientNos(ids);
+			salesReturnService.deleteByClientNos(ids);
 			result = clientDao.deleteBatch(ids);
 		} catch (Exception e) {
 			throw new SqlRollbackException("出现异常，回滚");

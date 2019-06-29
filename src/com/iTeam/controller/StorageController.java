@@ -21,12 +21,6 @@ import com.iTeam.util.PageUtil;
 
 import net.sf.json.JSONArray;
 
-/**
- * 控制器类
- * @author LMH
- *
- */
-
 @RestController
 @RequestMapping("/")
 public class StorageController {
@@ -37,7 +31,14 @@ public class StorageController {
 	
 	private final String PRODUCES = "application/json";
 	
-	//在浏览中通过URL调用storageList这个方法
+	/**
+	 * 查询仓库信息
+	 * @param page
+	 * @param rows
+	 * @param storageName
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value="/storages",method=RequestMethod.GET)
 	public MyResponse storageList(@RequestParam(value = "page",required = false) String page,
 			@RequestParam(value = "rows",required = false)String rows,
@@ -60,7 +61,12 @@ public class StorageController {
 		return new MyResponse().success(jsonArray);
 	}
 	
-	//在浏览中通过URL调用addStorage这个方法	
+	/**
+	 * 提交仓库信息
+	 * @param storage
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/storage",method=RequestMethod.POST,produces=PRODUCES)
 	public MyResponse addStorage(@RequestBody Storage storage) throws Exception {
 		MyResponse response=new MyResponse();
@@ -74,7 +80,12 @@ public class StorageController {
 		return response;
 	}
 	
-	//在浏览中通过URL调用updateStorage这个方法	
+	/**
+	 * 修改仓库信息
+	 * @param storage
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/storage",method=RequestMethod.PUT,produces=PRODUCES)
 	public MyResponse updateStorage(@RequestBody Storage storage) throws Exception {
 		MyResponse response=new MyResponse();
@@ -88,15 +99,21 @@ public class StorageController {
 		return response;
 	}	
 	
-	//在浏览中通过URL调用deleteStorage这个方法
+	/**
+	 * 删除仓库信息
+	 * @param ids
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/storage",method=RequestMethod.DELETE,produces=PRODUCES)
 	public MyResponse deleteStorage(@RequestBody List<Integer> ids)throws Exception{
 		if(ids.isEmpty())
 			return new MyResponse().failure("要删除的数目为零");
-		for(int i=0;i<ids.size();i++){
-			service.delete(ids.get(i));
-			System.out.println(ids.get(i));
-		}
+//		for(int i=0;i<ids.size();i++){
+//			service.delete(ids.get(i));
+//			System.out.println(ids.get(i));
+//		}
+		service.deleteBatch(ids);
 		return new MyResponse().success();
 	}
 }

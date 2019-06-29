@@ -113,9 +113,10 @@ public class SalesReturnController {
 	public MyResponse deleteSalesReturn(@RequestBody List<Integer> ids){
 		if(ids.isEmpty())
 			return new MyResponse().failure("要删除的数目为零");
-		for(int i = 0;i < ids.size();i++) {
-			service.deleteBysNo(ids.get(i));
-		}
+//		for(int i = 0;i < ids.size();i++) {
+//			service.deleteBysNo(ids.get(i));
+//		}
+		service.deleteBatchBysNos(ids);
 		return new MyResponse().success();
 	}
 }

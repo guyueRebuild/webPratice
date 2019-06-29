@@ -7,7 +7,7 @@ import com.iTeam.model.Client;
 
 /**
  * Service服务层接口
- * @author LMH
+ * @author LMH,HWQ
  *
  */
 

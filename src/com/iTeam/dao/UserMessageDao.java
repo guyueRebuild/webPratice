@@ -7,7 +7,6 @@ import com.iTeam.model.UserMessage;
 
 /**
  * 用户信息DAO层
- * @author XieZhiHao
  *
  */
 public interface UserMessageDao {

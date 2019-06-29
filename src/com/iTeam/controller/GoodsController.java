@@ -23,7 +23,6 @@ import net.sf.json.JSONArray;
 
 /**
  * 商品信息控制器
- * @author XieZhiHao
  *
  */
 @RestController
@@ -117,9 +116,10 @@ public class GoodsController {
 	public MyResponse deleteGoods(@RequestBody List<Integer> ids) throws IOException {
 		if(ids.isEmpty())
 			return new MyResponse().failure("要删除的数目为零");
-		for(int i = 0;i < ids.size();i++) {
-			service.delete(ids.get(i));
-		}
+//		for(int i = 0;i < ids.size();i++) {
+//			service.delete(ids.get(i));
+//		}
+		service.deleteBatch(ids);
 		return new MyResponse().success();
 	}
 }

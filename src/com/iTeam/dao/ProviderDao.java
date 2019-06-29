@@ -7,25 +7,44 @@ import com.iTeam.model.Provider;
 
 /**
  * 供应商信息DAO层
- * @author LMH
  *
  */
 
 public interface ProviderDao {
 
-	//获取供应商信息列表
+	/**
+	 * 获取供应商信息列表
+	 * @param map
+	 * @return
+	 */
 	public List<Provider> getProviderList(Map<String, Object> map);
 	
-	//获取记录总数
+	/**
+	 * 获取总记录数
+	 * @param map
+	 * @return
+	 */
 	public Long getTotal(Map<String, Object> map);
 	
-	//添加商品信息
+	/**
+	 * 新增供应商信息
+	 * @param provider
+	 * @return
+	 */
 	public int add(Provider provider);
 	
-	//修改商品信息
+	/**
+	 * 更新供应商信息
+	 * @param provider
+	 * @return
+	 */
 	public int update(Provider provider);
 	
-	//根据商品编号删除商品信息
+	/**
+	 * 根据供应商编号删除商品信息
+	 * @param id
+	 * @return
+	 */
 	public int delete(Integer id);	
 	
 	/**

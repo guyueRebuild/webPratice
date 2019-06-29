@@ -74,10 +74,7 @@
   </filter-mapping>
 
 
-
-
-
-  <filter>
+  <!-- <filter>
   	<display-name>LoginFilter</display-name>
   	<filter-name>LoginFilter</filter-name>
   	<filter-class>com.iTeam.filter.LoginFilter</filter-class>
@@ -85,7 +82,7 @@
   <filter-mapping>
   	<filter-name>LoginFilter</filter-name>
   	<url-pattern>/pages/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping> -->
   
     <servlet>
     <servlet-name>springMVC</servlet-name>

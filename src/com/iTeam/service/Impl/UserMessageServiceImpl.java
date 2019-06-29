@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
 import com.iTeam.dao.UserMessageDao;
 import com.iTeam.model.UserMessage;
 import com.iTeam.service.UserMessageService;
+import com.iTeam.token.TokenManager;
+import com.iTeam.util.MyConstants;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @Service("UserMessageService")
@@ -59,6 +63,23 @@ public class UserMessageServiceImpl implements UserMessageService {
 	@Override
 	public int deleteBatch(List<Integer> userNos) {
 		return userMessageDao.deleteBatch(userNos);
+	}
+
+	@Override
+	public boolean logout(HttpServletRequest request,TokenManager tokenManager) {
+		Cookie[] cookies = request.getCookies();
+		String token=null;
+		for(int i=0;i<cookies.length;i++) {
+			if(MyConstants.DEFAULT_TOKEN_NAME.equals(cookies[i].getValue())) {
+				token=cookies[i].getValue();
+				break;
+			}
+		}
+		if(tokenManager.checkToken(token)) {
+			tokenManager.deleteToken(token);
+			return true;
+		}
+		return false;
 	}
 
 }

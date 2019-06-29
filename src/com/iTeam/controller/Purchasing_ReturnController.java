@@ -28,7 +28,6 @@ import net.sf.json.JSONArray;
 
 /**
  * 控制器类
- * @author LMH
  *
  */
 @RestController
@@ -110,14 +109,20 @@ public class Purchasing_ReturnController {
 		return response;
 	}	
 	
-	//在浏览中通过URL调用deletePurchasing_Return这个方法		
+	/**
+	 * 删除采购退回信息
+	 * @param ids
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/purchasing_Return",method = RequestMethod.DELETE,produces = PRODUCES)
 	public MyResponse deletePurchasing_Return(@RequestBody List<Integer> ids)throws Exception{
 		if(ids.isEmpty())
 			return new MyResponse().failure("要删除的数目为零");
-		for(int i=0;i<ids.size();i++){
-			service.delete(ids.get(i));
-		}
+//		for(int i=0;i<ids.size();i++){
+//			service.delete(ids.get(i));
+//		}
+		service.deleteBatch(ids);
 		return new MyResponse().success();
 	}
 }

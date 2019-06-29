@@ -30,7 +30,7 @@ public interface StockInDao {
 	
 	public int deleteByStockInNos(List<Integer> stockInNos);
 	// 根据入库单号查询入库仓库
-	public int getStorageByStockInNo(int stockInNo);
+	public Integer getStorageByStockInNo(int stockInNo);
 	
 	public int deleteByGoodsNo(Integer goodsNo);
 	

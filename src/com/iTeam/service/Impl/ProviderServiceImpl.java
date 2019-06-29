@@ -78,7 +78,7 @@ public class ProviderServiceImpl implements ProviderService {
 		try {
 			//对供应商类型有约束的表：商品，
 			//根据供应商编号删除对应商品
-			List<Integer> goodsNos = goodsService.getGoodNoListByTypeNos(ids);
+			List<Integer> goodsNos = goodsService.getGoodNoListByProviderNos(ids);
 			goodsService.deleteBatch(goodsNos);
 			return providerDao.deleteBatch(ids);
 		}catch(Exception e) {

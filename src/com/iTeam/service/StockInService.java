@@ -29,7 +29,7 @@ public interface StockInService {
 	public int deleteByStockInNo(int stockInNo);
 	
 	// 根据入库单号查询入库仓库
-	public int getStorageByStockInNo(int stockInNo);
+	public Integer getStorageByStockInNo(int stockInNo);
 
 	/**
 	 * 批量删除入库信息

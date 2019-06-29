@@ -3,7 +3,10 @@ package com.iTeam.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.iTeam.model.UserMessage;
+import com.iTeam.token.TokenManager;
 
 /**
  * 用户信息Service层
@@ -54,4 +57,10 @@ public interface UserMessageService {
 	 * @return
 	 */
 	public int deleteBatch(List<Integer> userNos);
+	
+	/**
+	 * 退出登录
+	 * @param request
+	 */
+	public boolean logout(HttpServletRequest request,TokenManager tokenManager);
 }

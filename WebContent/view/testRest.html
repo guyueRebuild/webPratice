@@ -115,17 +115,17 @@
 					console.log(res)
 				},
 			});   */  
-		/*  var ids=[10014];
+		/* var ids=[10001,10002,10003,10005,1000,10007,10014];
 		 var ids=JSON.stringify(ids);
 		 $.ajax({
-			  url: 'http://localhost:8080/JXCMS2/client',
+			  url: 'http://localhost:8080/JXCMS2/storage',
 			  type: 'delete',
 			  data:ids,
 			  contentType: "application/json;charset=UTF-8",
 			  success: function(res) {
 					console.log(res)
 				},
-			});   */
+			});  */
 			
 	 		/* var goodsType={type:"HHH"};
 			var type=JSON.stringify(goodsType);
@@ -205,7 +205,57 @@
 								console.log(res)
 							},
 						}); */
-					/* var deptId={deptId:10000};
+ 			 var user={userName:'管理员',password:'123'};	
+						var userStr=JSON.stringify(user);
+						$.ajax({
+							url: 'http://localhost:8080/JXCMS2/login',
+							type:'post',
+							headers: {
+						        Accept: "application/json; charset=utf-8"
+						    },
+						    contentType: "application/json;charset=UTF-8",
+							data:userStr,
+							success: function(res) {
+									console.log(res)
+								},
+							error: function(err) {
+								console.log(err)
+								}
+							
+						}) 
+						
+ 	 	 				 $.ajax({
+							url: 'http://localhost:8080/JXCMS2/client',
+							type:'get',
+							headers: {
+						        Accept: "application/json; charset=utf-8"
+						    },
+						    contentType: "application/json;charset=UTF-8",
+							success: function(res) {
+									console.log(res)
+								},
+							error: function(err) {
+								console.log(err)
+								}
+							
+						})    
+						
+ /* 	 		  $.ajax({
+							url: 'http://localhost:8080/JXCMS2/logout',
+							type:'post',
+							headers: {
+						        Accept: "application/json; charset=utf-8"
+						    },
+						    contentType: "application/json;charset=UTF-8",
+							success: function(res) {
+									console.log(res)
+								},
+							error: function(err) {
+								console.log(err)
+								}
+							
+						})    */ 
+				 /*  var deptId={deptId:10000};
 					var jsonId=JSON.stringify(deptId);
 					  $.ajax({
 						  url: 'http://localhost:8080/JXCMS2/department/employees',
@@ -215,8 +265,8 @@
 						  success: function(res) {
 								console.log(res)
 							},
-						}); 
-						 */
+						}); */ 
+						  
 					/* var dept={deptId:10005,deptName:"李白部",deptManagerId:"10015"};
 					var deptdata=JSON.stringify(dept);
 					 $.ajax({
@@ -228,7 +278,7 @@
 								console.log(res)
 							},
 						}); */
-						var ids=[10005];
+					/* 	var ids=[10005];
 						var idsJson=JSON.stringify(ids);
 						$.ajax({
 							  url: 'http://localhost:8080/JXCMS2/department',
@@ -238,7 +288,7 @@
 							  success: function(res) {
 									console.log(res)
 								},
-							});
+							}); */
 					 
 				/* 	var puc={goodsNo:10001,storageNo:10001,dateIn:new Date()};
 					var puc=JSON.stringify(puc);

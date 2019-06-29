@@ -48,7 +48,7 @@
 		delete from stock_in where stockInNo=#{stockInNo}
 	</delete>
 	
-	<select id="getStorageByStockInNo" resultType="Integer" parameterType="Integer">
+	<select id="getStorageByStockInNo" parameterType="Integer" resultType="int">
 		select storageNo from stock_in where stockInNo=#{stockInNo}
 	</select>
 	

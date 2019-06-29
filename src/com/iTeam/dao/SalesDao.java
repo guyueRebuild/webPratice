@@ -8,22 +8,45 @@ import com.iTeam.model.Goods;
 import com.iTeam.model.Sales;
 
 public interface SalesDao {
-	//查询所有销售出货信息
+	/**
+	 * 查询所有销售出货信息
+	 * @param map
+	 * @return
+	 */
 	public List<Sales> findAll(Map<String,Object> map);
 	
-	//获取记录总数
+	/**
+	 * 获取记录总数
+	 * @param map
+	 * @return
+	 */
 	public Long getTotal(Map<String,Object> map);
 	
-	//通过编号查询出一条销售出货信息
+	/**
+	 * 通过编号查询出一条销售出货信息
+	 * @param sNo
+	 * @return
+	 */
 	public Sales findSalesBysNo(int sNo);
 	
-	//新增一条销售出货信息
+	/**
+	 * 新增一条销售出货信息
+	 * @param sales
+	 * @return
+	 */
 	public int add(Sales sales);
 	
-	//修改销售出货信息
+	/**
+	 * 修改销售出货信息
+	 * @param sales
+	 * @return
+	 */
 	public int update(Sales sales);
 	
-	//根据编号进行删除
+	/**
+	 * 根据编号进行删除
+	 * @param sNo
+	 */
 	public void deleteBysNo(int sNo);
 	
 	/**

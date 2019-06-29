@@ -37,9 +37,6 @@ import net.sf.json.JSONArray;
 
 /**
  * 用户信息控制层
- * 
- * @author XieZhiHao
- *
  */
 @RestController
 @RequestMapping("/")
@@ -79,11 +76,15 @@ public class UserMessageController {
 		} else {
 			String token = tokenManager.createToken(result.getUserName());
 			log.debug("**** Generate Token **** : " + token);
-			Cookie cookie = new Cookie(MyConstants.DEFAULT_TOKEN_NAME, token);
-			log.debug("Write Token to Cookie and return to the Client : " + cookie.toString());
-			response.addCookie(cookie);
+			//Cookie cookie = new Cookie(MyConstants.DEFAULT_TOKEN_NAME, token);
+			//log.debug("Write Token to Cookie and return to the Client : " + cookie.toString());
+			//response.addCookie(cookie);
 			MyResponse myResponse = new MyResponse();
-			return myResponse.success(userMessage.getUserName());
+			Map<String, Object> resultData = new HashMap<>();
+			result.setPassword("");
+			resultData.put("user",result);
+			resultData.put(MyConstants.DEFAULT_TOKEN_NAME, token);
+			return myResponse.success(resultData);
 		}
 	}
 
@@ -160,10 +161,10 @@ public class UserMessageController {
 	public MyResponse delete(@RequestBody List<Integer> ids) throws IOException {
 		if(ids.isEmpty())
 			return new MyResponse().failure("要删除的数目为零");
-		//支持删除多条记录
-		for(int i = 0;i < ids.size();i++) {
-			userMessageService.delete(ids.get(i));
-		}
+//		for(int i = 0;i < ids.size();i++) {
+//			userMessageService.delete(ids.get(i));
+//		}
+		userMessageService.deleteBatch(ids);
 		return new MyResponse().success();
 	}
 	/**
@@ -173,10 +174,35 @@ public class UserMessageController {
 	 */
 	@RequestMapping("/logout")
 	public MyResponse logout(HttpServletRequest request){
+		//boolean logout = userMessageService.logout(request, tokenManager);
+/*		Cookie[] cookies = request.getCookies();
+		String token=null;
+		MyResponse response = new MyResponse();
+		if(cookies==null) {
+			response.failure();
+		}
+		for(int i=0;i<cookies.length;i++) {
+			if(MyConstants.DEFAULT_TOKEN_NAME.equals(cookies[i].getName())) {
+				token=cookies[i].getValue();
+				break;
+			}
+		}
+		if(tokenManager.checkToken(token)) {
+			tokenManager.deleteToken(token);
+			log.debug("Logout Success...");
+			response.success();
+		}else {
+			log.debug("Logout failure...");
+			response.failure();
+		}
+		return response;
+	}*/
 		String token = request.getHeader(MyConstants.DEFAULT_TOKEN_NAME);
-		System.out.println(token);
-		tokenManager.deleteToken(token);
-		log.debug("Logout Success...");
-		return new MyResponse().success();
-	}
+		if(tokenManager.checkToken(token)) {
+			tokenManager.deleteToken(token);
+			return new MyResponse().success(token);
+		}else {
+			return new MyResponse().failure(token);
+		}
+	}	
 }

@@ -16,7 +16,7 @@
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd ">    
         
 	<!-- 自动扫描 -->
-	<context:component-scan base-package="com.iTeam.service,com.iTeam.token" />
+	<context:component-scan base-package="com.iTeam.service" />
 	
 	<!-- 开启注解驱动 -->
 	<task:annotation-driven/>
@@ -47,12 +47,6 @@
 		<property name="basePackage" value="com.iTeam.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
-
-
-
-	<!-- 配置单元测试，用于测试服务层代码 -->
-	<context:component-scan base-package="com.iTeam.service,com.iTeam.token" /> 
-
 
 
 	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->

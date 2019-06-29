@@ -23,9 +23,6 @@ import net.sf.json.JSONArray;
 
 /**
  * 控制器类
- * 
- * @author LMH
- *
  */
 
 @RestController
@@ -64,7 +61,6 @@ public class ClientController {
 
 	/**
 	 * 添加客户信息
-	 * 
 	 * @param client
 	 * @return
 	 * @throws IOException
@@ -85,7 +81,6 @@ public class ClientController {
 
 	/**
 	 * 修改客户信息
-	 * 
 	 * @param client
 	 * @return
 	 * @throws IOException
@@ -106,19 +101,19 @@ public class ClientController {
 
 	/**
 	 * 删除用户信息
-	 * 
 	 * @param ids
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/client", method = RequestMethod.DELETE, produces = PRODUCES)
 	public MyResponse deleteClient(@RequestBody List<Integer> ids) throws Exception {
-		if(ids.isEmpty())
+		if (ids.isEmpty())
 			return new MyResponse().failure("要删除的数目为零");
-		for (int i = 0; i < ids.size(); i++) {
-			System.out.println(ids.get(i));
-			service.delete(ids.get(i));
-		}
+//		for (int i = 0; i < ids.size(); i++) {
+//			System.out.println(ids.get(i));
+//			service.delete(ids.get(i));
+//		}
+		service.deleteBatch(ids);
 		return new MyResponse().success();
 	}
 }

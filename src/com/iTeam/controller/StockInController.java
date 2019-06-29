@@ -31,9 +31,6 @@ import net.sf.json.JSONArray;
 
 /**
  * 入库信息控制层
- * 
- * @author 谭昌敏
- *
  */
 @RestController
 @RequestMapping("/")
@@ -143,7 +140,7 @@ public class StockInController {
 		if(ids.isEmpty())
 			return new MyResponse().failure("要删除的数目为零");
 		for (int i = 0; i < ids.size(); i++) {
-			int storageNo = service.getStorageByStockInNo(ids.get(i));
+			Integer storageNo = service.getStorageByStockInNo(ids.get(i));
 			service.deleteByStockInNo(ids.get(i));
 			// 更新该仓库当前容量
 			updateStorage(storageNo);
@@ -151,7 +148,13 @@ public class StockInController {
 		return new MyResponse().success();
 	}
 
-	public void updateStorage(int storageNo) {
+	/**
+	 * 更新仓库信息
+	 * @param storageNo
+	 */
+	public void updateStorage(Integer storageNo) {
+		if(storageNo==null)
+			return;
 		int in = inventoryService.getStorageInInventory(storageNo);
 		int out = inventoryService.getStorageOutInventory(storageNo);
 

@@ -25,25 +25,28 @@
 	</select>
 	
 	<!-- =================根据商品类型查询商品ID=================== -->
-	<select id="getGoodsNoListByTypeNo"  parameterType="int" resultType="list">
+	<select id="getGoodsNoListByTypeNo"  parameterType="int" resultType="int">
 		SELECT goodsNo FROM goods where typeNo=#{typeNo};
 	</select>
 	
-	<select id="getGoodNoListByTypeNos"  parameterType="list" resultType="list">
+	<select id="getGoodNoListByTypeNos" parameterType="list" resultType="int">
 		SELECT goodsNo FROM goods where typeNo in
 		<foreach collection="list" item="item" index="index"
-		open="(" separator="," close=")"></foreach>
+		open="(" separator="," close=")">
+		#{item}
+		</foreach>
 	</select>
 	
 	<!-- =================根据供应商编号查询商品ID=================== -->
-	<select id="getGoodsNoListByProviderNo"  parameterType="int" resultType="list">
+	<select id="getGoodsNoListByProviderNo"  parameterType="int" resultType="int">
 		SELECT goodsNo FROM goods where providerNo=#{providerNo};
 	</select>
 	
-	<select id="getGoodNoListByProviderNos"  parameterType="list" resultType="list">
+	<select id="getGoodNoListByProviderNos"  parameterType="list" resultType="int">
 		SELECT goodsNo FROM goods where providerNo in
 		<foreach collection="list" item="item" index="index"
-		open="(" separator="," close=")"></foreach>
+		open="(" separator="," close=")">
+		#{item}</foreach>
 	</select>
 	
 	<select id="getTotal" resultType="Long">

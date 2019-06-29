@@ -18,7 +18,7 @@
 
 	<!-- 开启注解驱动 -->
 	<mvc:annotation-driven></mvc:annotation-driven>
-
+	<bean id="tokenManager" class="com.iTeam.token.SimpleTokenManager"></bean>
 	
 
 	<!-- 启用注解扫描，并定义组件查找规则 ，mvc层只负责扫描@Controller、@ControllerAdvice -->
@@ -31,6 +31,7 @@
        <!-- 控制器增强，使一个Contoller成为全局的异常处理类，类中用@ExceptionHandler方法注解的方法可以处理所有Controller发生的异常 -->
        <context:include-filter type="annotation"
            expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+       <context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect"/>
    </context:component-scan>
 	<!-- 支持Controller的AOP代理 -->
 	<aop:aspectj-autoproxy/>

@@ -2,7 +2,6 @@ package com.iTeam.model;
 
 /**
  * 分页
- * @author XieZhiHao
  *
  */
 public class PageBean {
@@ -13,8 +12,12 @@ public class PageBean {
 	
 	public PageBean(int page, int pageSize) {
 		super();
+		if(page<1) {
+			throw new IllegalArgumentException();
+		}
 		this.page = page;
 		this.pageSize = pageSize;
+		this.start=(page - 1) * pageSize;
 	}
 
 	public int getPage() {
@@ -34,7 +37,7 @@ public class PageBean {
 	}
 
 	public int getStart() {
-		return (page - 1) * pageSize;
+		return this.start;
 	}
 
 }

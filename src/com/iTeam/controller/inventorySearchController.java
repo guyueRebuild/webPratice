@@ -60,8 +60,8 @@ public class inventorySearchController {
 		int start = pageBean.getStart();
 		int pageSize = pageBean.getPageSize();
 		int end = start + pageSize;
-		if(start>total) {//页面超出范围
-			start=total;
+		if (start > total) {// 页面超出范围
+			start = total;
 		}
 		JSONArray jsonArray = PageUtil.ProcessDataJsonValue(java.util.Date.class,
 				in.subList(start, total >= end ? end : total), "yyyy-MM-dd HH:mm:ss");

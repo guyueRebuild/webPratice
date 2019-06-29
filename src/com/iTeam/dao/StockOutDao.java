@@ -28,7 +28,7 @@ public interface StockOutDao {
 	public int deleteByStockOutNo(int stockOutNo);
 	
 	// 根据出库单号查询出库仓库
-	public int getStorageByStockOutNo(int stockOutNo);
+	public Integer getStorageByStockOutNo(int stockOutNo);
 	
 	/**
 	 * 

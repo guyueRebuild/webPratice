@@ -60,7 +60,7 @@ public class StockInServiceImpl implements StockInService {
 	}
 
 	@Override
-	public int getStorageByStockInNo(int stockInNo) {
+	public Integer getStorageByStockInNo(int stockInNo) {
 		return stockInDao.getStorageByStockInNo(stockInNo);
 	}
 
