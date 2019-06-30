@@ -40,6 +40,10 @@ public class Purchasing_ReturnController {
 	
 	private final String PRODUCES = "application/json";
 	
+	/**
+	 * 配置验证器以供Spring MVC使用
+	 * @param binder
+	 */
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

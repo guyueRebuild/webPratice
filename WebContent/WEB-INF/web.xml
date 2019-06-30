@@ -21,19 +21,23 @@
    <filter>
        <filter-name>corsFilter</filter-name>
        <filter-class>com.iTeam.filter.CorsFilter</filter-class>
+       <!-- 允许访问的客户端域名 -->
        <init-param>
            <param-name>allowOrigin</param-name>
            <param-value>*</param-value>
        </init-param>
+       <!-- 允许访问的方法名 -->
        <init-param>
            <param-name>allowMethods</param-name>
            <param-value>GET,POST,PUT,DELETE,OPTIONS</param-value>
        </init-param>
+       	<!--是否允许请求带有验证信息，若要获取客户端域下的cookie时，需要将其设置为true  -->
        <init-param>
            <param-name>allowCredentials</param-name>
            <param-value>true</param-value>
        </init-param>
        <init-param>
+       <!-- 允许服务端访问的客户端请求头 -->
            <param-name>allowHeaders</param-name>
            <param-value>Content-Type,X-Token</param-value>
        </init-param>
@@ -63,7 +67,14 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <!--开启put，和delete的支持-->
-<!--使用Rest风格的URI,将页面普通的post请求转为delete或者put请求-->
+<!--使用Rest风格的URI,将页面普通的post请求转为delete或者put请求
+	HTTP定义了这四种方法，而HTML只支持两种:GET和POST，有两种可能的解决方案:
+	1.您可以使用JavaScript执行PUT或DELETE操作，
+	2.或者简单地使用实际方法作为附加参数(在HTML表单中建模为隐藏的输入字段)来完成POST。
+	后一个技巧是Spring的HiddenHttpMethodFilter所做的。
+	这个过滤器是一个普通的Servlet过滤器，因此它可以与任何web框架(不仅仅是Spring MVC)结合使用。
+	只需将此过滤器添加到web。和带有隐藏_method参数的POST将被转换为相应的HTTP方法请求。
+-->
   <filter>
 	<filter-name>hiddenHttpMethodFilter</filter-name>
 	<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>

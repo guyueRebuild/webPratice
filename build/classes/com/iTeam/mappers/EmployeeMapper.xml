@@ -45,7 +45,7 @@
 	</select>
 	<!--添加用户 -->
 	<insert id="addEmployee" parameterType="Employee">
-	    insert into employee values(default,#{empName},#{empGender},#{empPhone},#{empEmail},#{empDate},#{empId})
+	    insert into employee values(default,#{empName},#{empGender},#{empPhone},#{empEmail},#{empDate},#{deptId})
 	</insert>
 	<!-- 修改用户 -->
 	<update id="updateEmployee" parameterType="Employee">

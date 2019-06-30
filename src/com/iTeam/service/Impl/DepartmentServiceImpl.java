@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.iTeam.dao.DepartmentDao;
 import com.iTeam.exception.SqlRollbackException;
 import com.iTeam.model.Department;
+import com.iTeam.model.Employee;
 import com.iTeam.service.DepartmentService;
 import com.iTeam.service.EmployeeService;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
@@ -45,6 +46,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public int updateDepartment(Department department) throws Exception {
 		try {
+			Employee employee = new Employee();
+			employee.setDeptId(department.getDeptId());
+			employee.setEmpId(department.getDeptManagerId());
+			employeeService.updateEmployee(employee);
+			
 			return departmentDao.updateDepartment(department);
 		}catch(Exception e) {
 			throw new MySQLIntegrityConstraintViolationException("更新失败");
